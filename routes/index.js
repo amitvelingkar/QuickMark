@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const storeController = require('../controllers/storeController');
+const teamController = require('../controllers/teamController');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const reviewController = require('../controllers/reviewController');
@@ -28,6 +29,22 @@ router.get('/store/:slug', catchErrors(storeController.getStoreBySlug));
 
 router.get('/tags', catchErrors(storeController.getStoresByTag));
 router.get('/tags/:tag', catchErrors(storeController.getStoresByTag));
+
+router.get('/teams', catchErrors(teamController.getTeams));
+router.get('/teams/page/:page', catchErrors(teamController.getTeams));
+router.get('/teams/add', authController.isLoggedIn, teamController.addTeam);
+
+router.post('/teams/add',
+  catchErrors(teamController.createTeam)
+);
+
+router.post('/teams/add/:id',
+  catchErrors(teamController.updateTeam)
+);
+
+router.get('/teams/:id/edit', catchErrors(teamController.editTeam));
+router.get('/team/:slug', catchErrors(teamController.getTeamBySlug));
+
 
 router.get('/login', userController.loginForm);
 router.post('/login', authController.login);

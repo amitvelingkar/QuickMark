@@ -1,0 +1,13 @@
+extends layout
+
+include mixins/_teamCard
+include mixins/_pagination
+
+block content
+  .inner
+    h2= title
+    a(href=`/teams/add`) Create Team
+    .teams
+      each team in teams
+        +teamCard(team)
+    +pagination(page, pages, count)

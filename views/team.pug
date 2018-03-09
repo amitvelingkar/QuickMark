@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  .single
+    .single__hero
+      h2.title.title--single
+        a(href=`/team/${team.slug}`) #{team.name}
+
+  .single__details.inner
+    p= 'coming soon ability to add urls, folders and users'

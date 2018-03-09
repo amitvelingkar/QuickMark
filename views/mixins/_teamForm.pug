@@ -1,0 +1,5 @@
+mixin teamForm(team = {})
+  form(action=`/teams/add/${team._id || ''}` method="POST" class="card")
+    label(for="name") Name
+    input(type="text" name="name" value=team.name)
+    input(type="submit" value="Save →" class="button")
