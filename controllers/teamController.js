@@ -95,14 +95,12 @@ exports.editTeam = async (req, res) => {
 };
 
 exports.updateTeam = async (req, res) => {
-  // set the location data to be a point
-  req.body.location.type = 'Point';
   // find and update the team
   const team = await Team.findOneAndUpdate({ _id: req.params.id }, req.body, {
     new: true, // return the new team instead of the old one
     runValidators: true
   }).exec();
-  req.flash('success', `Successfully updated <strong>${team.name}</strong>. <a href="/teams/${team.slug}">View Team →</a>`);
+  req.flash('success', `Successfully updated <strong>${team.name}</strong>. <a href="/teams/${team._id}">View Team →</a>`);
   res.redirect(`/teams/${team._id}/edit`);
   // Redriect them the team and tell them it worked
 };
