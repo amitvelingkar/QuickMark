@@ -3,8 +3,24 @@ const Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 const md5 = require('md5');
 const validator = require('validator');
+const mValidator = require('mongoose-validator');
+
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
 const passportLocalMongoose = require('passport-local-mongoose');
+
+
+const usernameValidator = [
+  mValidator({
+    validator: 'isLength',
+    arguments: [3, 15],
+    message: 'UserName should be between {ARGS[0]} and {ARGS[1]} characters',
+  }),
+  mValidator({
+    validator: 'isAlphanumeric',
+    passIfEmpty: true,
+    message: 'UserName should contain alpha-numeric characters only',
+  }),
+ ];
 
 const userSchema = new Schema({
   email: {
@@ -18,6 +34,13 @@ const userSchema = new Schema({
   name: {
     type: String,
     required: 'Please supply a name',
+    trim: true
+  },
+  username: {
+    type: String,
+    unique: true,
+    required: 'Please supply a unique user name',
+    validate: usernameValidator,
     trim: true
   },
   resetPasswordToken: String,
