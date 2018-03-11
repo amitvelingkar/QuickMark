@@ -48,34 +48,20 @@ exports.resize = async (req, res, next) => {
 
 exports.createTeam = async (req, res) => {
   req.body.owner = req.user._id;
+  //res.send(req.body);
   const team = await (new Team(req.body)).save();
   req.flash('success', `Successfully Created ${team.name}.`);
   res.redirect(`/team/${team.slug}`);
 };
 
 exports.getTeams = async (req, res) => {
-  const page = req.params.page || 1;
-  const limit = 10;
-  const skip = (page * limit) - limit;
-
   // 1. Query the database for a list of all teams
-  const teamsPromise = Team
+  // TODO - filter only teams for which current user is owner or member
+  const teams = await Team
     .find()
-    .skip(skip)
-    .limit(limit)
     .sort({ created: 'desc' });
 
-  const countPromise = Team.count();
-
-  const [teams, count] = await Promise.all([teamsPromise, countPromise]);
-  const pages = Math.ceil(count / limit);
-  if (!teams.length && skip) {
-    req.flash('info', `Hey! You asked for page ${page}. But that doesn't exist. So I put you on page ${pages}`);
-    res.redirect(`/teams/page/${pages}`);
-    return;
-  }
-
-  res.render('teams', { title: 'Teams', teams, page, pages, count });
+  res.render('teams', { title: 'Teams', teams });
 };
 
 const confirmOwner = (team, user) => {
@@ -83,7 +69,6 @@ const confirmOwner = (team, user) => {
     throw Error('You must own a team in order to edit it!');
   }
 };
-
 
 exports.editTeam = async (req, res) => {
   // 1. Find the team given the ID

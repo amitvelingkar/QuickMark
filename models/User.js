@@ -8,20 +8,6 @@ const mValidator = require('mongoose-validator');
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
 const passportLocalMongoose = require('passport-local-mongoose');
 
-
-const usernameValidator = [
-  mValidator({
-    validator: 'isLength',
-    arguments: [3, 15],
-    message: 'UserName should be between {ARGS[0]} and {ARGS[1]} characters',
-  }),
-  mValidator({
-    validator: 'isAlphanumeric',
-    passIfEmpty: true,
-    message: 'UserName should contain alpha-numeric characters only',
-  }),
- ];
-
 const userSchema = new Schema({
   email: {
     type: String,
@@ -36,12 +22,16 @@ const userSchema = new Schema({
     required: 'Please supply a name',
     trim: true
   },
-  username: {
-    type: String,
-    unique: true,
-    required: 'Please supply a unique user name',
-    validate: usernameValidator,
-    trim: true
+  account: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Account',
+    required: 'You must supply an account!'
+  },
+  role: {
+    // 1 = site owner, 5 = admin, 10=member
+    type: Number,
+    min: 1,
+    max: 10
   },
   resetPasswordToken: String,
   resetPasswordExpires: Date,

@@ -14,6 +14,7 @@ exports.validateRegister = (req, res, next) => {
   req.sanitizeBody('name');
   req.checkBody('name', 'You must supply a name!').notEmpty();
   req.checkBody('email', 'That Email is not valid!').isEmail();
+  req.checkBody('accountName', 'Organization name must be between 3 and 25 characters!').isLength(3, 25);
   req.sanitizeBody('email').normalizeEmail({
     gmail_remove_dots: false,
     remove_extension: false,
@@ -29,11 +30,23 @@ exports.validateRegister = (req, res, next) => {
     res.render('register', { title: 'Register', body: req.body, flashes: req.flash() });
     return; // stop the fn from running
   }
+
   next(); // there were no errors!
 };
 
+exports.checkIfUserExists = async (req, res, next) => {
+  // make sure this user with same email does not exist
+  const user = await User.findOne({ email: req.body.email });
+  if (user) {
+    req.flash('error', 'This email is already registered, try log-in instead');
+    res.redirect(`/login`);
+    return;
+  }
+  next(); // keep going
+};
+
 exports.register = async (req, res, next) => {
-  const user = new User({ email: req.body.email, name: req.body.name });
+  const user = new User({ email: req.body.email, name: req.body.name, account: req.body.account, role: 1 });
   const register = promisify(User.register, User);
   await register(user, req.body.password);
   next(); // pass to authController.login
