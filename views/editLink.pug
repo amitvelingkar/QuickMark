@@ -1,0 +1,8 @@
+extends layout
+
+include mixins/_linkForm
+
+block content
+  .inner
+    h2= title
+    +linkForm(link, section)

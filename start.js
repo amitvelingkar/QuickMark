@@ -17,6 +17,7 @@ require('./models/Account');
 require('./models/User');
 require('./models/Team');
 require('./models/Section');
+require('./models/Link');
 require('./models/Store');
 require('./models/Review');
 

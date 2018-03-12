@@ -8,14 +8,6 @@ exports.addSection = (req, res) => {
 
 exports.createSection = async (req, res) => {
   req.body.owner = req.user._id;
-  
-  const section = await (new Section(req.body)).save();
-  req.flash('success', `Successfully Created ${section.name}.`);
-  res.redirect(`/section/${section.slug}`);
-};
-
-exports.createSection = async (req, res) => {
-  req.body.owner = req.user._id;
   // res.send(req.body);
   const section = await (new Section(req.body)).save();
   req.flash('success', `Successfully Created ${section.name}.`);
@@ -43,7 +35,7 @@ exports.editSection = async (req, res) => {
 };
 
 exports.getSectionBySlug = async (req, res, next) => {
-  const section = await Section.findOne({ slug: req.params.slug }).populate('owner sections');
+  const section = await Section.findOne({ slug: req.params.slug }).populate('owner team');
   if (!section) return next();
   res.render('section', { section, title: section.name });
 };

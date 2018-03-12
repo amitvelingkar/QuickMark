@@ -1,0 +1,11 @@
+mixin linkForm(link = {}, section)
+  pre= h.dump(section)
+  form(action=`/links/add/${link._id || ''}` method="POST" class="card")
+    label(for="name") Name
+    input(type="text" name="name" value=link.name required)
+    label(for="url") URL
+    input(type="url" name="url" value=link.url required)
+    label(for="description") Description
+    textarea(name="description")= link.description
+    input(type="hidden" name="section" value=section)
+    input(type="submit" value="Save →" class="button")

@@ -3,6 +3,7 @@ const router = express.Router();
 const storeController = require('../controllers/storeController');
 const teamController = require('../controllers/teamController');
 const sectionController = require('../controllers/sectionController');
+const linkController = require('../controllers/linkController');
 const accountController = require('../controllers/accountController');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
@@ -60,6 +61,20 @@ catchErrors(sectionController.updateSection)
 
 router.get('/sections/:id/edit', catchErrors(sectionController.editSection));
 router.get('/section/:slug', catchErrors(sectionController.getSectionBySlug));
+
+// SECTION ROUTES
+router.get('/section/:sectionid/links/add', authController.isLoggedIn, linkController.addLink);
+
+router.post('/links/add',
+catchErrors(linkController.createLink)
+);
+
+router.post('/links/add/:id',
+catchErrors(linkController.updateLink)
+);
+
+router.get('/links/:id/edit', catchErrors(linkController.editLink));
+router.get('/link/:slug', catchErrors(linkController.getLinkBySlug));
 
 // REGISTER & LOGIN ROUTES
 router.get('/login', userController.loginForm);

@@ -55,7 +55,7 @@ teamSchema.pre('save', async function(next) {
   // TODO make more resiliant so slugs are unique per owner
 });
 
-// find reviews where the teams _id property === reviews team property
+// find sections where the team's _id property === section's team property
 teamSchema.virtual('sections', {
   ref: 'Section', // what model to link?
   localField: '_id', // which field on the team?

@@ -29,14 +29,37 @@ const sectionSchema = new mongoose.Schema({
     type: Number,
     min: 1,
     max: 2
-  },
+  }
+  /*
+  ,
+  // possibly, we would want to store references to links as an array to allow users to custon sort them (same with sections)
+  // TODO - research how people implementing sorting pattern in mongoose schema
   links : [ { type: mongoose.Schema.Types.ObjectId, ref: 'Link' } ]
+  */
+},{
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
 });
 
 // Define our indexes
 sectionSchema.index({
   name: 'text'
 });
+
+// find reviews where the section's _id property === link's section property
+sectionSchema.virtual('links', {
+  ref: 'Link', // what model to link?
+  localField: '_id', // which field on the section?
+  foreignField: 'section' // which field on the section?
+});
+
+function autopopulate(next) {
+  this.populate('links');
+  next();
+}
+
+// sectionSchema.pre('find', autopopulate);
+sectionSchema.pre('findOne', autopopulate);
 
 sectionSchema.pre('save', async function(next) {
   if (!this.isModified('name')) {
