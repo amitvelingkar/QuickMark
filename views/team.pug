@@ -3,11 +3,12 @@ include mixins/_sectionCard
 
 block content
   .inner
-    h2
-      a(href=`/team/${team.slug}`) #{team.name}
-    .actionbar
-      .actionbar__item
-        a(href=`/team/${team._id}/sections/add`) Create Sections
+    .pageheader
+      .title
+        a(href=`/team/${team.slug}`) #{team.name}
+      .actions
+        .actions--item
+          a(href=`/team/${team._id}/sections/add`) Create Sections
     .lists
       each section in team.sections
         +sectionCard(section)

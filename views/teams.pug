@@ -3,10 +3,12 @@ include mixins/_teamCard
 
 block content
   .inner
-    h2= title
-    .actionbar
-      .actionbar__item
-        a(href=`/teams/add`) Create Team
+    .pageheader
+      .title
+        div= title
+      .actions
+        .actions--item
+          a(href=`/teams/add`) Create Team
     .lists
       each team in teams
         +teamCard(team)
