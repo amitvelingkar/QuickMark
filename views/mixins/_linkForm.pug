@@ -1,5 +1,5 @@
 mixin linkForm(link = {}, section)
-  pre= h.dump(section)
+  // pre= h.dump(section)
   form(action=`/links/add/${link._id || ''}` method="POST" class="card")
     label(for="name") Name
     input(type="text" name="name" value=link.name required)

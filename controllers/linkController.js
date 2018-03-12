@@ -19,8 +19,10 @@ exports.updateLink = async (req, res) => {
   const link = await Link.findOneAndUpdate({ _id: req.params.id }, req.body, {
     new: true, // return the new link instead of the old one
     runValidators: true
-  }).exec();
-  req.flash('success', `Successfully updated <strong>${link.name}</strong>. <a href="/links/${link._id}">View Link →</a>`);
+  })
+  .populate('section')
+  .exec();
+  req.flash('success', `Successfully updated <strong>${link.name}</strong>. <a href="/section/${link.section.slug}">Back to Section →</a>`);
   res.redirect(`/links/${link._id}/edit`);
   // Redriect them the link and tell them it worked
 };
@@ -38,10 +40,4 @@ exports.editLink = async (req, res) => {
   confirmOwner(link, req.user);
   // 3. Render out the edit form so the user can update their link
   res.render('editLink', { title: `Edit ${link.name}`, link, section: link.section });
-};
-
-exports.getLinkBySlug = async (req, res, next) => {
-  const link = await Link.findOne({ slug: req.params.slug }).populate('owner section');
-  if (!link) return next();
-  res.render('link', { link, title: link.name });
 };

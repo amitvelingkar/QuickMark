@@ -62,7 +62,7 @@ catchErrors(sectionController.updateSection)
 router.get('/sections/:id/edit', catchErrors(sectionController.editSection));
 router.get('/section/:slug', catchErrors(sectionController.getSectionBySlug));
 
-// SECTION ROUTES
+// LINK ROUTES
 router.get('/section/:sectionid/links/add', authController.isLoggedIn, linkController.addLink);
 
 router.post('/links/add',
@@ -74,7 +74,6 @@ catchErrors(linkController.updateLink)
 );
 
 router.get('/links/:id/edit', catchErrors(linkController.editLink));
-router.get('/link/:slug', catchErrors(linkController.getLinkBySlug));
 
 // REGISTER & LOGIN ROUTES
 router.get('/login', userController.loginForm);

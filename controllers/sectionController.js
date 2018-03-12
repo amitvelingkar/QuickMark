@@ -20,9 +20,15 @@ exports.updateSection = async (req, res) => {
     new: true, // return the new section instead of the old one
     runValidators: true
   }).exec();
-  req.flash('success', `Successfully updated <strong>${section.name}</strong>. <a href="/sections/${section._id}">View Section →</a>`);
+  req.flash('success', `Successfully updated <strong>${section.name}</strong>. <a href="/section/${section.slug}">View Section →</a>`);
   res.redirect(`/sections/${section._id}/edit`);
   // Redriect them the section and tell them it worked
+};
+
+const confirmOwner = (link, user) => {
+  if (!link.owner.equals(user._id)) {
+    throw Error('You must own a team in order to edit it!');
+  }
 };
 
 exports.editSection = async (req, res) => {
@@ -31,7 +37,7 @@ exports.editSection = async (req, res) => {
   // 2. confirm they are the owner of the section
   confirmOwner(section, req.user);
   // 3. Render out the edit form so the user can update their section
-  res.render('editSection', { title: `Edit ${section.name}`, section });
+  res.render('editSection', { title: `Edit ${section.name}`, section, team: section.team });
 };
 
 exports.getSectionBySlug = async (req, res, next) => {

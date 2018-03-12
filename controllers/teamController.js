@@ -85,7 +85,7 @@ exports.updateTeam = async (req, res) => {
     new: true, // return the new team instead of the old one
     runValidators: true
   }).exec();
-  req.flash('success', `Successfully updated <strong>${team.name}</strong>. <a href="/teams/${team._id}">View Team →</a>`);
+  req.flash('success', `Successfully updated <strong>${team.name}</strong>. <a href="/team/${team.slug}">View Team →</a>`);
   res.redirect(`/teams/${team._id}/edit`);
   // Redriect them the team and tell them it worked
 };
