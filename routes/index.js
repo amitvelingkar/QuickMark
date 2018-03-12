@@ -2,11 +2,14 @@ const express = require('express');
 const router = express.Router();
 const storeController = require('../controllers/storeController');
 const teamController = require('../controllers/teamController');
+const sectionController = require('../controllers/sectionController');
+const accountController = require('../controllers/accountController');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const reviewController = require('../controllers/reviewController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
+// OLD ROUTES - EXAMPLE APP
 router.get('/', catchErrors(storeController.getStores));
 router.get('/stores', catchErrors(storeController.getStores));
 router.get('/stores/page/:page', catchErrors(storeController.getStores));
@@ -30,14 +33,13 @@ router.get('/store/:slug', catchErrors(storeController.getStoreBySlug));
 router.get('/tags', catchErrors(storeController.getStoresByTag));
 router.get('/tags/:tag', catchErrors(storeController.getStoresByTag));
 
+// TEAM ROUTES
 router.get('/teams', catchErrors(teamController.getTeams));
-router.get('/teams/page/:page', catchErrors(teamController.getTeams));
 router.get('/teams/add', authController.isLoggedIn, teamController.addTeam);
 
 router.post('/teams/add',
   catchErrors(teamController.createTeam)
 );
-
 router.post('/teams/add/:id',
   catchErrors(teamController.updateTeam)
 );
@@ -45,17 +47,34 @@ router.post('/teams/add/:id',
 router.get('/teams/:id/edit', catchErrors(teamController.editTeam));
 router.get('/team/:slug', catchErrors(teamController.getTeamBySlug));
 
+// SECTION ROUTES
+router.get('/team/:teamid/sections/add', authController.isLoggedIn, sectionController.addSection);
 
+router.post('/sections/add',
+catchErrors(sectionController.createSection)
+);
+
+router.post('/sections/add/:id',
+catchErrors(sectionController.updateSection)
+);
+
+router.get('/sections/:id/edit', catchErrors(sectionController.editSection));
+router.get('/section/:slug', catchErrors(sectionController.getSectionBySlug));
+
+// REGISTER & LOGIN ROUTES
 router.get('/login', userController.loginForm);
 router.post('/login', authController.login);
 router.get('/register', userController.registerForm);
 
 // 1. Validate the registration data
-// 2. register the user
-// 3. we need to log them in
+// 2. Create new account
+// 3. register the user
+// 4. we need to log them in
 router.post('/register',
   userController.validateRegister,
-  userController.register,
+  catchErrors(userController.checkIfUserExists),
+  catchErrors(accountController.createAccount),
+  catchErrors(userController.register),
   authController.login
 );
 

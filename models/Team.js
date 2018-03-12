@@ -1,8 +1,13 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const slug = require('slugs');
+const shortid = require('shortid');
 
 const teamSchema = new mongoose.Schema({
+  shortid: {
+    type: String,
+    'default': shortid.generate
+  },
   name: {
     type: String,
     trim: true,
@@ -18,7 +23,11 @@ const teamSchema = new mongoose.Schema({
     ref: 'User',
     required: 'You must supply an author'
   },
-  users : [ { type: mongoose.Schema.Types.ObjectId, ref: 'User' } ]
+  admins : [ { type: mongoose.Schema.Types.ObjectId, ref: 'User' } ],
+  members : [ { type: mongoose.Schema.Types.ObjectId, ref: 'User' } ],
+},{
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
 });
 
 // Define our indexes
@@ -32,58 +41,33 @@ teamSchema.pre('save', async function(next) {
     return; // stop this function from running
   }
   this.slug = slug(this.name);
-  // find other teams that have a slug of wes, wes-1, wes-2
+  const accountId = this.owner.account;
+  // find other teams for same account that have a slug of wes, wes-1, wes-2
   const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i');
-  const teamsWithSlug = await this.constructor.find({ slug: slugRegEx });
+  const teamsWithSlug = await this.constructor.find({ 
+    slug: slugRegEx,
+    account: accountId
+  });
   if (teamsWithSlug.length) {
     this.slug = `${this.slug}-${teamsWithSlug.length + 1}`;
   }
   next();
-  // TODO make more resiliant so slugs are unique
+  // TODO make more resiliant so slugs are unique per owner
 });
-/*
-teamSchema.statics.getTagsList = function() {
-  return this.aggregate([
-    { $unwind: '$tags' },
-    { $group: { _id: '$tags', count: { $sum: 1 } } },
-    { $sort: { count: -1 } }
-  ]);
-};
-
-teamSchema.statics.getTopStores = function() {
-  return this.aggregate([
-    // Lookup Stores and populate their reviews
-    { $lookup: { from: 'reviews', localField: '_id', foreignField: 'team', as: 'reviews' }},
-    // filter for only items that have 2 or more reviews
-    { $match: { 'reviews.1': { $exists: true } } },
-    // Add the average reviews field
-    { $project: {
-      photo: '$$ROOT.photo',
-      name: '$$ROOT.name',
-      reviews: '$$ROOT.reviews',
-      slug: '$$ROOT.slug',
-      averageRating: { $avg: '$reviews.rating' }
-    } },
-    // sort it by our new field, highest reviews first
-    { $sort: { averageRating: -1 }},
-    // limit to at most 10
-    { $limit: 10 }
-  ]);
-}
 
 // find reviews where the teams _id property === reviews team property
-teamSchema.virtual('reviews', {
-  ref: 'Review', // what model to link?
+teamSchema.virtual('sections', {
+  ref: 'Section', // what model to link?
   localField: '_id', // which field on the team?
-  foreignField: 'team' // which field on the review?
+  foreignField: 'team' // which field on the section?
 });
 
 function autopopulate(next) {
-  this.populate('reviews');
+  this.populate('sections');
   next();
 }
 
-teamSchema.pre('find', autopopulate);
+// teamSchema.pre('find', autopopulate);
 teamSchema.pre('findOne', autopopulate);
-*/
+
 module.exports = mongoose.model('Team', teamSchema);

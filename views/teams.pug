@@ -1,12 +1,12 @@
 extends layout
-
 include mixins/_teamCard
-include mixins/_pagination
 
 block content
   .inner
     h2= title
-    a(href=`/teams/add`) Create Team
-    .teams
+    .actionbar
+      .actionbar__item
+        a(href=`/teams/add`) Create Team
+    .lists
       each team in teams
         +teamCard(team)

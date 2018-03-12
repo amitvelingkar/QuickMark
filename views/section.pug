@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  pre= h.dump(section)
+  .single
+    .single__hero
+      h2.title.title--single
+        a(href=`/section/${section.slug}`) #{section.name}
+  .single__details.inner
+    a(href=`/section/${section._id}/links/add`) Create Links
+    p= 'coming soon ability to add links'

@@ -1,10 +1,11 @@
 mixin teamCard(team = {})
-  .store
-    .store__hero
-      .store__actions
-        if user && team.owner.equals(user._id)
-          .store__action.store__action--edit
-            a(href=`/teams/${team._id}/edit`)
-              != h.icon('pencil')
-      h2.title
+  .list
+    .list_content
+      .list__title
         a(href=`/team/${team.slug}`) #{team.name}
+    .list__actions
+      if user && team.owner.equals(user._id)
+        .list__action.list__action--edit
+          a(href=`/teams/${team._id}/edit`)
+            != h.icon('pencil')
+    

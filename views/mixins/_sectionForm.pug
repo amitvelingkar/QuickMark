@@ -1,0 +1,7 @@
+mixin sectionForm(section = {}, team)
+  pre= h.dump(team)
+  form(action=`/sections/add/${section._id || ''}` method="POST" class="card")
+    label(for="name") Name
+    input(type="text" name="name" value=section.name)
+    input(type="hidden" name="team" value=team)
+    input(type="submit" value="Save →" class="button")

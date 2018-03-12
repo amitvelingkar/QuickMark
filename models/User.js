@@ -28,7 +28,7 @@ const userSchema = new Schema({
     required: 'You must supply an account!'
   },
   role: {
-    // 1 = site owner, 5 = admin, 10=member
+    // 1 = account owner, 5 = admin, 10=member
     type: Number,
     min: 1,
     max: 10

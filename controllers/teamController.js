@@ -91,7 +91,7 @@ exports.updateTeam = async (req, res) => {
 };
 
 exports.getTeamBySlug = async (req, res, next) => {
-  const team = await Team.findOne({ slug: req.params.slug }).populate('author reviews');
+  const team = await Team.findOne({ slug: req.params.slug }).populate('owner');
   if (!team) return next();
   res.render('team', { team, title: team.name });
 };

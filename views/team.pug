@@ -1,10 +1,14 @@
 extends layout
+include mixins/_sectionCard
 
 block content
-  .single
-    .single__hero
-      h2.title.title--single
-        a(href=`/team/${team.slug}`) #{team.name}
-
-  .single__details.inner
-    p= 'coming soon ability to add urls, folders and users'
+  .inner
+    h2
+      a(href=`/team/${team.slug}`) #{team.name}
+    .actionbar
+      .actionbar__item
+        a(href=`/team/${team._id}/sections/add`) Create Sections
+    .lists
+      each section in team.sections
+        +sectionCard(section)
+    // pre= h.dump(team)

@@ -1,0 +1,8 @@
+extends layout
+
+include mixins/_sectionForm
+
+block content
+  .inner
+    h2= title
+    +sectionForm(section, team)
