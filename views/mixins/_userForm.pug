@@ -1,0 +1,5 @@
+mixin userForm(user = {})
+  form(action=`/users/add/${user._id || ''}` method="POST" class="card")
+    label(for="name") Name
+    input(type="text" name="name" value=user.name)
+    input(type="submit" value="Save →" class="button")

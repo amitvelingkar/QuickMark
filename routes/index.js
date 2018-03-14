@@ -7,11 +7,11 @@ const linkController = require('../controllers/linkController');
 const accountController = require('../controllers/accountController');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
+const invitationController = require('../controllers/invitationController');
 const reviewController = require('../controllers/reviewController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
 // OLD ROUTES - EXAMPLE APP
-router.get('/', catchErrors(storeController.getStores));
 router.get('/stores', catchErrors(storeController.getStores));
 router.get('/stores/page/:page', catchErrors(storeController.getStores));
 router.get('/add', authController.isLoggedIn, storeController.addStore);
@@ -35,6 +35,7 @@ router.get('/tags', catchErrors(storeController.getStoresByTag));
 router.get('/tags/:tag', catchErrors(storeController.getStoresByTag));
 
 // TEAM ROUTES
+router.get('/', catchErrors(teamController.getTeams));
 router.get('/teams', catchErrors(teamController.getTeams));
 router.get('/teams/add', authController.isLoggedIn, teamController.addTeam);
 
@@ -80,13 +81,28 @@ router.get('/login', userController.loginForm);
 router.post('/login', authController.login);
 router.get('/register', userController.registerForm);
 
+// ACCOUNT ROUTES
+router.get('/account', accountController.getAccount);
+router.get('/account/users', catchErrors(accountController.getUsers));
+
+// invitation
+router.get('/account/users/invite', catchErrors(invitationController.sendInvitation));
+router.post('/account/users/invite', 
+  authController.isLoggedIn,
+  catchErrors(userController.confirmNewUser),
+  catchErrors(invitationController.confirmNewInvitation),
+  catchErrors(invitationController.inviteUser)
+);
+
+router.get('/account/users/:id/edit', catchErrors(accountController.editUser));
+
 // 1. Validate the registration data
 // 2. Create new account
 // 3. register the user
 // 4. we need to log them in
 router.post('/register',
   userController.validateRegister,
-  catchErrors(userController.checkIfUserExists),
+  catchErrors(userController.confirmNewUser),
   catchErrors(accountController.createAccount),
   catchErrors(userController.register),
   authController.login
@@ -94,13 +110,18 @@ router.post('/register',
 
 router.get('/logout', authController.logout);
 
-router.get('/account', authController.isLoggedIn, userController.account);
-router.post('/account', catchErrors(userController.updateAccount));
-router.post('/account/forgot', catchErrors(authController.forgot));
-router.get('/account/reset/:token', catchErrors(authController.reset));
-router.post('/account/reset/:token',
+router.get('/profile', authController.isLoggedIn, userController.profile);
+router.post('/profile', catchErrors(userController.updateProfile));
+router.post('/profile/forgot', catchErrors(authController.forgot));
+router.get('/profile/reset/:token', catchErrors(authController.reset));
+router.post('/profile/reset/:token',
   authController.confirmedPasswords,
   catchErrors(authController.update)
+);
+router.get('/profile/invitation/:token', catchErrors(authController.invitation));
+router.post('/profile/invitation/:token',
+  authController.confirmedPasswords,
+  catchErrors(authController.addUser)
 );
 router.get('/map', storeController.mapPage);
 router.get('/hearts', authController.isLoggedIn, catchErrors(storeController.getHearts));

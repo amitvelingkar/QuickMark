@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  .inner
+    h2= title
+    form(action=`/account/users/invite` method="POST" class="card")
+      label(for="email") Email Address
+      input(type="email" name="email")
+      label(for="role") Role
+      select(name="role")
+        option(value=10) Member
+        option(value=5) Admin
+        option(value=1) Owner
+      input(type="submit" value="Invite User →" class="button")

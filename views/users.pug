@@ -1,0 +1,22 @@
+extends layout
+include mixins/_userCard
+include mixins/_invitationCard
+
+block content
+  .inner
+    .pageheader
+      .title
+        div= 'Users'
+      .actions
+        .actions--item
+          a(href=`/account/users/invite`) Invite New User
+    .lists
+      each user in users
+        +userCard(user)
+    .pageheader
+      .title
+        div= 'Pending Invites'
+    .lists
+      each invitation in invitations
+        +invitationCard(invitation)
+    // pre= h.dump(user)

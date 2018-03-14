@@ -25,3 +25,24 @@
         }
     }
 }
+
+.subtitle {
+    font-size: 2rem;
+    font-size: 2rem;
+    margin-top: 5rem;
+    font-family: 'Panama';
+    font-weight: 600;
+    letter-spacing: -1px;
+}
+
+.section{
+    background: white;
+    margin: 10px 0;
+    width: 100%;
+    padding: 2rem;
+    .link {
+        color: #1b6ac9;
+        display: block;
+        padding: 10px 0px;        
+    }
+}

@@ -2,12 +2,18 @@ extends layout
 
 block content
   .inner
-    h2 Edit Your Account
-    form(action="/account" method="POST")
-      label(for="name") Name
-      input(type="text" name="name" value=user.name)
-      label(for="email") Email Address
-      input(type="email" name="email" value=user.email)
-      label(for="username") User Name
-      input(type="text" name="username" value=user.username)
-      input.button(type="submit" value="Update My Account")
+    .pageheader
+      .text
+        .title= `Account Administration`    
+        div Manage your QuickMark account
+    if h.isAccountAdmin(user)
+      .subtitle You're an admin, so you can...
+      .section
+        a(href=`/account/users`).link Add/remove users or chnage their roles
+        a(href=`/account/users`).link Add/remove users or chnage their roles
+        a(href=`/account/users`).link Add/remove users or chnage their roles
+        a(href=`/account`).link coming soon
+    if h.isAccountOwner(user)
+      .subtitle You're an owner, so you can...
+      .section
+        a(href=`/account`).link coming soon

@@ -2,8 +2,8 @@ const passport = require('passport');
 const crypto = require('crypto');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const Invitation = mongoose.model('Invitation');
 const promisify = require('es6-promisify');
-const mail = require('../handlers/mail');
 
 exports.login = passport.authenticate('local', {
   failureRedirect: '/login',
@@ -40,7 +40,8 @@ exports.forgot = async (req, res) => {
   user.resetPasswordExpires = Date.now() + 3600000; // 1 hour from now
   await user.save();
   // 3. Send them an email with the token
-  const resetURL = `http://${req.headers.host}/account/reset/${user.resetPasswordToken}`;
+  const resetURL = `http://${req.headers.host}/profile/reset/${user.resetPasswordToken}`;
+  //res.send(resetURL);
   await mail.send({
     user,
     filename: 'password-reset',
@@ -63,6 +64,19 @@ exports.reset = async (req, res) => {
   }
   // if there is a user, show the rest password form
   res.render('reset', { title: 'Reset your Password' });
+};
+
+exports.invitation = async (req, res) => {
+  const invitation = await Invitation.findOne({
+    invitationToken: req.params.token,
+    invitationExpires: { $gt: Date.now() }
+  }).populate('account');
+  if (!invitation) {
+    req.flash('error', 'Invitation is invalid or has expired. Please ask the sender to send it again.');
+    return res.redirect('/login');
+  }
+  // if there is a user, show the rest password form
+  res.render('invitation', { invitation });
 };
 
 exports.confirmedPasswords = (req, res, next) => {
@@ -94,3 +108,36 @@ exports.update = async (req, res) => {
   req.flash('success', '💃 Nice! Your password has been reset! You are now logged in!');
   res.redirect('/');
 };
+
+exports.addUser = async (req, res) => {
+  // find invitation
+  const invitation = await Invitation.findOne({
+    invitationToken: req.params.token,
+    invitationExpires: { $gt: Date.now() }
+  });
+
+  if (!invitation) {
+    req.flash('error', 'Invite is invalid or has expired');
+    return res.redirect('/login');
+  }
+
+  // create user
+  req.body.email = invitation.email;
+  req.body.account = invitation.account;
+  req.body.role = invitation.role;
+  const user = await (new User(req.body)).save();
+
+  // set password
+  const setPassword = promisify(user.setPassword, user);
+  await setPassword(req.body.password);
+  const updatedUser = await user.save();
+
+  // delete invitation
+  await invitation.remove();
+
+  // login user
+  await req.login(updatedUser);
+  req.flash('success', '💃 Nice! Your password has been reset! You are now logged in!');
+  res.redirect('/');
+};
+

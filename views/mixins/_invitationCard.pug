@@ -1,0 +1,10 @@
+mixin invitationCard(invitation = {})
+  .list
+    .list_content
+      .list__title
+        div #{invitation.email}
+    .list__actions
+        .list__action.list__action--edit
+          a(href=`/#`)
+            != h.icon('pencil')
+    

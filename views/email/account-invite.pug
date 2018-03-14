@@ -1,0 +1,8 @@
+extends email-layout
+
+block content
+  h2 You're invited to QuickMark Extension
+  p Hello. You have been invited by #{sender} to #{account}'s QuickMark Extension. Please note this link is only valid for the next 2 weeks.
+  p QuickMark lets teams quickly manage and share urls with each other.
+  +button(resetURL, 'Go to QuickMark →')
+  p If you can't click the above button please visit #{resetURL}

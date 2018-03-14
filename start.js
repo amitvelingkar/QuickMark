@@ -15,6 +15,7 @@ mongoose.connection.on('error', (err) => {
 // import all of our models
 require('./models/Account');
 require('./models/User');
+require('./models/Invitation');
 require('./models/Team');
 require('./models/Section');
 require('./models/Link');

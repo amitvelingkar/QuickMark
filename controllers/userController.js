@@ -34,29 +34,31 @@ exports.validateRegister = (req, res, next) => {
   next(); // there were no errors!
 };
 
-exports.checkIfUserExists = async (req, res, next) => {
+// TODO - if account is different - what should we do??? 
+// most apps insist on email per account, so we may be good for now
+exports.confirmNewUser = async (req, res, next) => {
   // make sure this user with same email does not exist
   const user = await User.findOne({ email: req.body.email });
   if (user) {
-    req.flash('error', 'This email is already registered, try log-in instead');
-    res.redirect(`/login`);
-    return;
+    req.flash('error', `<strong>${user.email}</strong> is already registered with QuickMark. Please try log-in or password recovery.`);
+    return res.redirect('back');
   }
   next(); // keep going
 };
 
 exports.register = async (req, res, next) => {
+  // TODO
   const user = new User({ email: req.body.email, name: req.body.name, account: req.body.account, role: 1 });
   const register = promisify(User.register, User);
   await register(user, req.body.password);
   next(); // pass to authController.login
 };
 
-exports.account = (req, res) => {
-  res.render('account', { title: 'Edit Your Account' });
+exports.profile = (req, res) => {
+  res.render('profile', { title: 'Edit Your Profile' });
 };
 
-exports.updateAccount = async (req, res) => {
+exports.updateProfile = async (req, res) => {
   const updates = {
     name: req.body.name,
     email: req.body.email

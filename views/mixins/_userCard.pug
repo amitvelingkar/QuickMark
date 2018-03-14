@@ -1,0 +1,11 @@
+mixin userCard(user = {})
+  .list
+    .list_content
+      .list__title
+        div #{user.name}
+    .list__actions
+      if h.isAccountAdmin(user)
+        .list__action.list__action--edit
+          a(href=`/#`)
+            != h.icon('pencil')
+    

@@ -20,11 +20,11 @@ exports.icon = (name) => fs.readFileSync(`./public/images/icons/${name}.svg`);
 // Some details about the site
 exports.siteName = `Now That's Delicious!`;
 
+// account roles and permissions
+exports.isAccountOwner = (user) => (user && user.role <= 1);
+exports.isAccountAdmin = (user) => (user && user.role <= 5);
+
 exports.menu = [
-  { slug: '/teams', title: 'Teams', icon: 'store', },
-  { slug: '/stores', title: 'Stores', icon: 'store', },
-  { slug: '/tags', title: 'Tags', icon: 'tag', },
-  { slug: '/top', title: 'Top', icon: 'top', },
-  { slug: '/add', title: 'Add', icon: 'add', },
-  { slug: '/map', title: 'Map', icon: 'map', },
+  { slug: '/teams', title: 'Teams', icon: 'book', },
+  { slug: '/account', title: 'Admin', icon: 'admin', },
 ];

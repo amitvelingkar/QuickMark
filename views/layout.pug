@@ -18,10 +18,6 @@ html
                 a.nav__link(href=item.slug, class=(currentPath.startsWith(item.slug) ? 'nav__link--active' : ''))
                   != h.icon(item.icon)
                   span #{item.title}
-          .nav__section.nav__section--search
-            .search
-              input.search__input(type="text" placeholder="Coffee, beer..." name="search")
-              .search__results
           .nav__section.nav__section--user
             if user
               li.nav__item: a.nav__link(href="/hearts", class=(currentPath.startsWith('/hearts') ? 'nav__link--active' : ''))
@@ -30,7 +26,7 @@ html
               li.nav__item: a.nav__link(href="/logout", class=(currentPath.startsWith('/logout') ? 'nav__link--active' : ''))
                 != h.icon('logout')
                 span Logout
-              li.nav__item: a.nav__link(href="/account", class=(currentPath.startsWith('/account') ? 'nav__link--active' : ''))
+              li.nav__item: a.nav__link(href="/profile", class=(currentPath.startsWith('/profile') ? 'nav__link--active' : ''))
                 img.avatar(src=user.gravatar + 'd=retro')
             else
               li.nav__item: a.nav__link(href="/register", class=(currentPath.startsWith('/register') ? 'nav__link--active' : '')) Register
