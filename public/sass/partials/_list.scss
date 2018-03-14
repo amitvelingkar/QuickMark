@@ -45,5 +45,11 @@
       border-bottom: 0;
     }
   }
+  &--text {
+    font-size: 0.8em;
+    text-transform: uppercase;
+    margin-right: 10px;
+    color: #ccc;
+  }
 }
 

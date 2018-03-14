@@ -24,6 +24,9 @@ exports.siteName = `Now That's Delicious!`;
 exports.isAccountOwner = (user) => (user && user.role <= 1);
 exports.isAccountAdmin = (user) => (user && user.role <= 5);
 
+// role to text
+exports.roleToText = (role) => ((role<=1) ? 'Owner' : ((role<=5) ? 'Admin' : 'Member'));
+
 exports.menu = [
   { slug: '/teams', title: 'Teams', icon: 'book', },
   { slug: '/account', title: 'Admin', icon: 'admin', },
