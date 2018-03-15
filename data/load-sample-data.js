@@ -18,6 +18,7 @@ const Invitation = require('../models/Invitation');
 const stores = JSON.parse(fs.readFileSync(__dirname + '/stores.json', 'utf-8'));
 const reviews = JSON.parse(fs.readFileSync(__dirname + '/reviews.json', 'utf-8'));
 const users = JSON.parse(fs.readFileSync(__dirname + '/users.json', 'utf-8'));
+const accounts = JSON.parse(fs.readFileSync(__dirname + '/accounts.json', 'utf-8'));
 
 async function deleteData() {
   console.log('😢😢 Goodbye Data...');
@@ -35,9 +36,10 @@ async function deleteData() {
 
 async function loadData() {
   try {
-    await Store.insertMany(stores);
-    await Review.insertMany(reviews);
+    //await Store.insertMany(stores);
+    //await Review.insertMany(reviews);
     await User.insertMany(users);
+    await Account.insertMany(accounts);
     console.log('👍👍👍👍👍👍👍👍 Done!');
     process.exit();
   } catch(e) {
