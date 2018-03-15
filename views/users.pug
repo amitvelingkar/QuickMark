@@ -1,6 +1,7 @@
 extends layout
 include mixins/_userCard
 include mixins/_invitationCard
+include mixins/_emptyCard
 
 block content
   .inner
@@ -24,4 +25,6 @@ block content
     .lists
       each user in users
         +userCard(user)
+    if users.length < 2 && invitations.length < 1
+      +emptyCard('It`s so lonely. Invite a team-mate to join.','/account/users/invite')
     // pre= h.dump(user)

@@ -23,11 +23,11 @@ exports.getUsers = async (req, res) => {
   // 1. Query the database for a list of all teams
   // TODO - filter only teams for which current user is owner or member
   const usersPromise = User
-  .find()
+  .find({ account: req.user.account._id })
   .sort({ role: 'asc', name: 'asc' });
   
   const invitationsPromise = Invitation
-  .find()
+  .find({ account: req.user.account._id })
   .sort({ email: 'asc' });
 
   const [users, invitations] = await Promise.all([usersPromise, invitationsPromise]);

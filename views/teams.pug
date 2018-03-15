@@ -1,5 +1,6 @@
 extends layout
 include mixins/_teamCard
+include mixins/_emptyCard
 
 block content
   .inner
@@ -10,6 +11,9 @@ block content
         .actions--item
           a(href=`/teams/add`) Create Team
     .lists
-      each team in teams
-        +teamCard(team)
-    pre= h.dump(user)
+      if teams.length
+        each team in teams
+          +teamCard(team)
+      else
+        +emptyCard('No teams have been created yet, be the pioneer.','/teams/add')
+    // pre= h.dump(user)

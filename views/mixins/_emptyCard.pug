@@ -1,0 +1,7 @@
+mixin emptyCard(text, url)
+  .empty
+    a(href=`${url}`)
+      .empty__text
+          div #{text}
+      .empty__icon
+        != h.icon('add_circle')
