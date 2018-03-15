@@ -23,6 +23,11 @@ const teamSchema = new mongoose.Schema({
     ref: 'User',
     required: 'You must supply an author'
   },
+  account: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Account',
+    required: 'You must supply an account!'
+  },
   admins : [ { type: mongoose.Schema.Types.ObjectId, ref: 'User' } ],
   members : [ { type: mongoose.Schema.Types.ObjectId, ref: 'User' } ],
 },{
@@ -41,7 +46,7 @@ teamSchema.pre('save', async function(next) {
     return; // stop this function from running
   }
   this.slug = slug(this.name);
-  const accountId = this.owner.account;
+  const accountId = this.account;
   // find other teams for same account that have a slug of wes, wes-1, wes-2
   const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i');
   const teamsWithSlug = await this.constructor.find({ 

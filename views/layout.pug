@@ -32,6 +32,9 @@ html
               li.nav__item: a.nav__link(href="/account", class=(currentPath.startsWith('/account') ? 'nav__link--active' : ''))
                 != h.icon('admin')
                 span Admin
+              li.nav__item: a.nav__link(href="/account/users", class=(currentPath.startsWith('/account/users') ? 'nav__link--active' : ''))
+                != h.icon('people')
+                span Users
             if user
               li.nav__item: a.nav__link(href="/logout", class=(currentPath.startsWith('/logout') ? 'nav__link--active' : ''))
                 != h.icon('logout')

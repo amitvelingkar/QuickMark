@@ -48,6 +48,7 @@ exports.resize = async (req, res, next) => {
 
 exports.createTeam = async (req, res) => {
   req.body.owner = req.user._id;
+  req.body.account = req.user.account._id;
   //res.send(req.body);
   const team = await (new Team(req.body)).save();
   req.flash('success', `Successfully Created ${team.name}.`);
