@@ -86,7 +86,7 @@ router.get('/account', accountController.getAccount);
 router.get('/account/users', catchErrors(accountController.getUsers));
 
 // invitation
-router.get('/account/users/invite', catchErrors(invitationController.sendInvitation));
+router.get('/account/users/invite', invitationController.sendInvitation);
 router.post('/account/users/invite', 
   authController.isLoggedIn,
   catchErrors(userController.confirmNewUser),

@@ -5,7 +5,7 @@ block content
     .pageheader
       .text
         .title= `Account Administration`    
-        div Manage your QuickMark account
+        div Manage your #{user.account.name} account
     if h.isAccountAdmin(user)
       .subtitle You're an admin, so you can...
       .section

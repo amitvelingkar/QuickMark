@@ -3,9 +3,6 @@ const Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 const validator = require('validator');
 
-const mongodbErrorHandler = require('mongoose-mongodb-errors');
-const passportLocalMongoose = require('passport-local-mongoose');
-
 const invitationSchema = new Schema({
   email: {
     type: String,

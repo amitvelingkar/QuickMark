@@ -5,9 +5,8 @@ const Invitation = mongoose.model('Invitation');
 const mail = require('../handlers/mail');
 const promisify = require('es6-promisify');
 
-exports.sendInvitation = async(req, res) => {
-  const account = await Account.findOne({ _id: req.user.account });
-  res.render('inviteUser', { title: `${account.name} - Add New User`});
+exports.sendInvitation = (req, res) => {
+  res.render('inviteUser', { title: `${req.user.account.name} - Add New User`});
 };
 
 exports.editInvitation = async (req, res) => {
@@ -28,7 +27,7 @@ exports.confirmNewInvitation = async (req, res, next) => {
 
 exports.inviteUser = async (req, res) => {
   // 1. Cleanup & prepare data
-  req.body.account = req.user.account;
+  req.body.account = req.user.account._id;
   req.body.invitationToken = crypto.randomBytes(20).toString('hex');
   req.body.invitationExpires = Date.now() + 1209600000; // 2 weeks from now - allows db cleanup
   req.sanitizeBody('email').normalizeEmail({
@@ -38,17 +37,14 @@ exports.inviteUser = async (req, res) => {
   });
 
   // 2. Create a new user with reset tokens and expiry on their account
-  const invitationRef = new Invitation(req.body);
-  const invitationPromise = invitationRef.save();
-  const accountPromise = Account.findOne({ _id: req.user.account });
-  const [invitation, account] = await Promise.all([invitationPromise, accountPromise]);
-  
+  const invitation = await (new Invitation(req.body)).save();
+
   // 3. Send them an email with the token
   const resetURL = `http://${req.headers.host}/profile/invitation/${invitation.invitationToken}`;
   await mail.send({
     user: invitation,
     sender: req.user.name, // cuurent logged-in user
-    account: account.name,
+    account: req.user.account.name,
     filename: 'account-invite',
     subject: 'You\'re invited to QuickMark',
     resetURL
