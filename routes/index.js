@@ -35,8 +35,8 @@ router.get('/tags', catchErrors(storeController.getStoresByTag));
 router.get('/tags/:tag', catchErrors(storeController.getStoresByTag));
 
 // TEAM ROUTES
-router.get('/', catchErrors(teamController.getTeams));
-router.get('/teams', catchErrors(teamController.getTeams));
+router.get('/', authController.isLoggedIn, catchErrors(teamController.getTeams));
+router.get('/teams', authController.isLoggedIn, catchErrors(teamController.getTeams));
 router.get('/teams/add', authController.isLoggedIn, teamController.addTeam);
 
 router.post('/teams/add',
