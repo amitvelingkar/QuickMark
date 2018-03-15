@@ -3,6 +3,8 @@ mixin userCard(user = {})
     .list_content
       .list__title
         div #{user.name}
+      .list__text
+        div #{user.email}
     .list__actions
         .list__action.list__action--text
           div= h.roleToText(user.role)
