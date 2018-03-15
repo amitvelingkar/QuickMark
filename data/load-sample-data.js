@@ -9,7 +9,11 @@ mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 const Store = require('../models/Store');
 const Review = require('../models/Review');
 const User = require('../models/User');
-
+const Team = require('../models/Team');
+const Account = require('../models/Account');
+const Section = require('../models/Section');
+const Link = require('../models/Link');
+const Invitation = require('../models/Invitation');
 
 const stores = JSON.parse(fs.readFileSync(__dirname + '/stores.json', 'utf-8'));
 const reviews = JSON.parse(fs.readFileSync(__dirname + '/reviews.json', 'utf-8'));
@@ -20,6 +24,11 @@ async function deleteData() {
   await Store.remove();
   await Review.remove();
   await User.remove();
+  await Team.remove();
+  await Account.remove();
+  await Invitation.remove();
+  await Section.remove();
+  await Link.remove();
   console.log('Data Deleted. To load sample data, run\n\n\t npm run sample\n\n');
   process.exit();
 }
