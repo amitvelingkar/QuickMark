@@ -9,11 +9,11 @@ block content
     if h.isAccountAdmin(user)
       .subtitle You're an admin, so you can...
       .section
-        a(href=`/account/users`).link Add/remove users or chnage their roles
-        a(href=`/account/users`).link Add/remove users or chnage their roles
-        a(href=`/account/users`).link Add/remove users or chnage their roles
-        a(href=`/account`).link coming soon
+        a(href=`/account/users`).link Add/remove users or change their roles
+        p 
+        div More options coming soon
     if h.isAccountOwner(user)
       .subtitle You're an owner, so you can...
       .section
-        a(href=`/account`).link coming soon
+        p 
+        div More options coming soon

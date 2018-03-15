@@ -29,5 +29,4 @@ exports.roleToText = (role) => ((role<=1) ? 'Owner' : ((role<=5) ? 'Admin' : 'Me
 
 exports.menu = [
   { slug: '/teams', title: 'Teams', icon: 'book', },
-  { slug: '/account', title: 'Admin', icon: 'admin', },
 ];
