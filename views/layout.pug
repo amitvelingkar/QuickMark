@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title= `${title} | ${h.siteName}`
+    title= `${title || ''} | ${h.siteName}`
     link(rel='stylesheet', href='/dist/style.css')
     link(rel="shortcut icon" type="image/png" href="/images/icons/doughnut.png")
     meta(name="viewport" content="width=device-width, initial-scale=1")
@@ -11,11 +11,17 @@ html
         nav.nav
           .nav__section.nav__section--pages
             //-
+              - const tags = store.tags || []
+
               li.nav__item
                 a.nav__link.nav__link--logo(href="/")
                   != h.icon('logo')
             li.nav__item
-              a.nav__link.nav__link--logo(href="/") #{user.account.name}
+              if user
+                a.nav__link.nav__link--logo(href="/") #{user.account.name}
+              else
+                a.nav__link.nav__link--logo(href="/")
+                  != h.icon('logo')
             each item in h.menu
               li.nav__item
                 a.nav__link(href=item.slug, class=(currentPath.startsWith(item.slug) ? 'nav__link--active' : ''))

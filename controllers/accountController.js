@@ -16,7 +16,7 @@ exports.createAccount = async (req, res, next) => {
 };
 
 exports.getAccount = (req, res) => {
-  res.render('account', { });
+  res.render('account', { title: 'Admin' });
 };
 
 exports.getUsers = async (req, res) => {
@@ -32,5 +32,5 @@ exports.getUsers = async (req, res) => {
 
   const [users, invitations] = await Promise.all([usersPromise, invitationsPromise]);
 
-  res.render('users', { users, invitations });
+  res.render('users', { title: 'Users', users, invitations });
 };
