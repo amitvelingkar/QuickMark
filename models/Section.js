@@ -50,7 +50,7 @@ sectionSchema.index({
 sectionSchema.virtual('links', {
   ref: 'Link', // what model to link?
   localField: '_id', // which field on the section?
-  foreignField: 'section' // which field on the section?
+  foreignField: 'section' // which field on the link?
 });
 
 function autopopulate(next) {
@@ -58,7 +58,7 @@ function autopopulate(next) {
   next();
 }
 
-// sectionSchema.pre('find', autopopulate);
+sectionSchema.pre('find', autopopulate);
 sectionSchema.pre('findOne', autopopulate);
 
 sectionSchema.pre('save', async function(next) {

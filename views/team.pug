@@ -1,4 +1,4 @@
-extends layout
+extends layout2
 include mixins/_sectionCard
 
 block content
@@ -9,7 +9,7 @@ block content
       .actions
         .actions--item
           a(href=`/team/${team._id}/sections/add`) Create Sections
-    .lists
+    .sections
       each section in team.sections
         +sectionCard(section)
-    // pre= h.dump(team)
+    pre= h.dump(team)

@@ -1,14 +1,7 @@
 mixin linkCard(link = {})
-  .list
-    .list_content
-      .list__title
-        a(href=`${link.url}`) #{link.name}
-      .list__url
-        a(href=`${link.url}`) #{link.url}
-      if link.description
-        .list__text
-          div= link.description
-    .list__actions
+  .link
+    a(href=`${link.url}`) #{link.name}
+    .link__actions
       if user && link.owner.equals(user._id)
         .list__action.list__action--edit
           a(href=`/links/${link._id}/edit`)

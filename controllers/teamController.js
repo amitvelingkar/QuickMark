@@ -5,19 +5,6 @@ const User = mongoose.model('User');
 //const jimp = require('jimp');
 const uuid = require('uuid');
 
-/*
-const multerOptions = {
-  storage: multer.memoryStorage(),
-  fileFilter(req, file, next) {
-    const isPhoto = file.mimetype.startsWith('image/');
-    if(isPhoto) {
-      next(null, true);
-    } else {
-      next({ message: 'That filetype isn\'t allowed!' }, false);
-    }
-  }
-};
-*/
 exports.homePage = (req, res) => {
   res.render('index');
 };
@@ -25,26 +12,6 @@ exports.homePage = (req, res) => {
 exports.addTeam = (req, res) => {
   res.render('editTeam', { title: 'Add Team' });
 };
-
-/*
-exports.upload = multer(multerOptions).single('photo');
-
-exports.resize = async (req, res, next) => {
-  // check if there is no new file to resize
-  if (!req.file) {
-    next(); // skip to the next middleware
-    return;
-  }
-  const extension = req.file.mimetype.split('/')[1];
-  req.body.photo = `${uuid.v4()}.${extension}`;
-  // now we resize
-  const photo = await jimp.read(req.file.buffer);
-  await photo.resize(800, jimp.AUTO);
-  await photo.write(`./public/uploads/${req.body.photo}`);
-  // once we have written the photo to our filesystem, keep going!
-  next();
-};
-*/
 
 exports.createTeam = async (req, res) => {
   req.body.owner = req.user._id;
@@ -92,23 +59,15 @@ exports.updateTeam = async (req, res) => {
 };
 
 exports.getTeamBySlug = async (req, res, next) => {
-  const team = await Team.findOne({ slug: req.params.slug }).populate('owner');
+  const team = await Team.findOne({ slug: req.params.slug }).populate({
+    path: 'owner sections',
+    populate: {
+      path: 'links'
+    }
+  });
   if (!team) return next();
   res.render('team', { team, title: team.name });
 };
-/*
-exports.getTeamsByTag = async (req, res) => {
-  const tag = req.params.tag;
-  const tagQuery = tag || { $exists: true, $ne: [] };
-
-  const tagsPromise = Team.getTagsList();
-  const teamsPromise = Team.find({ tags: tagQuery });
-  const [tags, teams] = await Promise.all([tagsPromise, teamsPromise]);
-
-
-  res.render('tag', { tags, title: 'Tags', tag, teams });
-};
-*/
 
 exports.searchTeams = async (req, res) => {
   const teams = await Team

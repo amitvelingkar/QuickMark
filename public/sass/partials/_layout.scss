@@ -24,3 +24,16 @@ body {
     padding:0;
   }
 }
+
+.container {
+  display: flex;
+  .main {
+    width: 100%;
+  }
+  .sidebar {
+    background: $purple800;
+    color: #eee;
+    width: 240px;
+    padding: 0 2rem;
+  }
+}

@@ -4,7 +4,7 @@
   margin: 0;
   padding: 0;
   justify-content: space-between;
-  background: $black;
+  box-shadow: $shadLight;
   &__section {
     display: flex;
     &--search {
@@ -15,9 +15,8 @@
     display: flex;
   }
   &__link {
-    background: $black;
-    color: white;
-    border-right: 1px solid rgba(255,255,255,0.1);
+    color: #666;
+    border-right: 1px solid rgba(0,0,0,0.1);;
     text-transform: uppercase;
     padding: 1.2rem 2rem 1rem 2rem;
     display: block;
@@ -28,10 +27,12 @@
     transition: transform 0.2s;
     border-bottom: 5px solid transparent;
     svg {
-      width: 40px;
+      width: 30px;
       transition: all 0.2s;
-      fill: white;
-      margin-bottom: 1rem;
+      fill: #666;
+    }
+    span {
+      font-size: 12px;
     }
     &:hover, &--active {
       border-bottom-color: rgba(0,0,0,0.2);
