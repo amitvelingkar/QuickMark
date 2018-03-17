@@ -1,8 +1,9 @@
 mixin linkCard(link = {})
   .link
-    a(href=`${link.url}`) #{link.name}
+    .link__title
+      a(href=`${link.url}`) #{link.name}
     .link__actions
-      if user && link.owner.equals(user._id)
+      if user && (link.owner.equals(user._id) || h.isAccountAdmin(user))
         .list__action.list__action--edit
           a(href=`/links/${link._id}/edit`)
             != h.icon('pencil')

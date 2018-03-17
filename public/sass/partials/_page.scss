@@ -41,8 +41,26 @@
     width: 100%;
     padding: 2rem;
     .link {
-        color: #1b6ac9;
-        display: block;
-        padding: 10px 0px;        
+        padding: 5px 0px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &__title a {
+            color: #2196F3;
+        }
+        &__actions {
+            opacity: 0;
+        }
+        &:hover{
+            border-bottom: 1px solid #E3F2FD;
+            .link__actions {
+                opacity: 1;
+            }
+        }        
+    }
+    &__header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+        margin-bottom: 1em;
     }
 }
