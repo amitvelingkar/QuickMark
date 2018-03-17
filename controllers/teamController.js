@@ -58,15 +58,25 @@ exports.updateTeam = async (req, res) => {
   // Redriect them the team and tell them it worked
 };
 
+// this is the main method that populates the whole app
 exports.getTeamBySlug = async (req, res, next) => {
-  const team = await Team.findOne({ slug: req.params.slug }).populate({
+  // get all teams for sidebar
+  const teamsPromise = Team
+  .find({ account: req.user.account._id })
+  .sort({ created: 'desc' });
+
+  // get current team for main page
+  const curTeamPromise = Team.findOne({ slug: req.params.slug }).populate({
     path: 'owner sections',
     populate: {
       path: 'links'
     }
   });
-  if (!team) return next();
-  res.render('team', { team, title: team.name });
+
+  const [teams, curTeam] = await Promise.all([teamsPromise, curTeamPromise]);
+
+  if (!curTeam) return next();
+  res.render('team', { curTeam, teams, title: curTeam.name });
 };
 
 exports.searchTeams = async (req, res) => {
