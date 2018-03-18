@@ -4,9 +4,13 @@ include mixins/_sectionCard
 
 block sidebar
   .sidebar__section
-    .sidebar__section--header Teams
+    .sidebar__section--header
+      .sidebar__section--title Teams
+      .sidebar__addTeam 
+        != h.icon('add_circle')
     each team in teams
       +teamCard(team)
+    //.sidebar__add.sidebar__add--team Create New Team
 block content
   .inner
     .pageheader
