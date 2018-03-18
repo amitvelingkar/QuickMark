@@ -1,6 +1,6 @@
 /* The Modal (background) */
 .modal {
-    //display: none; /* Hidden by default */
+    display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;
@@ -14,6 +14,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 3em;
     }
     &__title {
         font-size: 4rem;
@@ -31,8 +32,7 @@
         background-color: #fefefe;
         padding: 20px;
         border: 1px solid #888;
-        width: 80%; /* Could be more or less, depending on screen size */
-        height: 40%;
+        width: 60%; /* Could be more or less, depending on screen size */
         align-self: center;
     }
     &__close {
@@ -45,6 +45,28 @@
             color: black;
             text-decoration: none;
             cursor: pointer;
+        }
+    }
+    &__footer {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-top: 4em;
+        .button {
+            border: 0;
+            background: #ccc;
+            color: #303030;
+            font-family: 'Fira Sans', sans-serif;
+            font-weight: 600;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 1px 10px rgba(0, 0, 0, 0.15);
+            margin-left: 20px;
+            width: 120px;
+            text-align: center;
+            &--default {
+                background: #FFC40E;
+            }
         }
     }
 
