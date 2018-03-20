@@ -32,6 +32,17 @@ exports.getTeams = async (req, res) => {
   res.render('teams', { title: 'Teams', teams });
 };
 
+exports.getTeams2 = async (req, res) => {
+  // 1. Query the database for a list of all teams
+  // TODO - filter only teams for which current user is owner or member
+  const teams = await Team
+    .find()
+    .sort({ created: 'desc' });
+
+  res.json(teams);
+};
+
+
 const confirmOwner = (team, user) => {
   if (!team.owner.equals(user._id)) {
     throw Error('You must own a team in order to edit it!');
