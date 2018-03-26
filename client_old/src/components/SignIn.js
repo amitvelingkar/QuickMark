@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 import { SignUpLink } from './SignUp';
 import { PasswordForgetLink } from './PasswordForget';
-import { auth } from '../firebase';
+import { auth } from '../passport/auth';
 import * as routes from '../constants/routes';
 
 const SignInPage = ({ history }) =>
@@ -41,6 +42,25 @@ class SignInForm extends Component {
       history,
     } = this.props;
 
+    const user = {
+      email,
+      password
+    };
+
+    axios
+    .post('/api/v1/auth/login', {
+      email,
+      password
+    })
+    .then(() => {
+      this.setState(() => ({ ...INITIAL_STATE }));
+      history.push(routes.HOME);
+    })
+    .catch(error => {
+      this.setState(byPropKey('error', error));
+    });
+
+    /*
     auth.doSignInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState(() => ({ ...INITIAL_STATE }));
@@ -49,7 +69,7 @@ class SignInForm extends Component {
       .catch(error => {
         this.setState(byPropKey('error', error));
       });
-
+    */
     event.preventDefault();
   }
 
