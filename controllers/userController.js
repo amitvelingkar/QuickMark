@@ -34,9 +34,49 @@ exports.validateRegister = (req, res, next) => {
   next(); // there were no errors!
 };
 
+exports.validateRegister2 = (req, res, next) => {
+  req.sanitizeBody('name');
+  req.checkBody('name', 'You must supply a name!').notEmpty();
+  req.checkBody('email', 'That Email is not valid!').isEmail();
+  req.checkBody('accountName', 'Organization name must be between 3 and 25 characters!').isLength(3, 25);
+  req.sanitizeBody('email').normalizeEmail({
+    gmail_remove_dots: false,
+    remove_extension: false,
+    gmail_remove_subaddress: false
+  });
+  req.checkBody('password', 'Password Cannot be Blank!').notEmpty();
+  req.checkBody('password-confirm', 'Confirmed Password cannot be blank!').notEmpty();
+  req.checkBody('password-confirm', 'Oops! Your passwords do not match').equals(req.body.password);
+
+  const errors = req.validationErrors();
+  if (errors) {
+    return res.status(400).json({
+      success: false,
+      message: 'Registration Failed!!!',
+      errors: errors
+    });
+  }
+
+  next(); // there were no errors!
+};
+
 // TODO - if account is different - what should we do??? 
 // most apps insist on email per account, so we may be good for now
 exports.confirmNewUser = async (req, res, next) => {
+  // make sure this user with same email does not exist
+  const user = await User.findOne({ email: req.body.email });
+  if (user) {
+    return res.status(400).json({
+      success: false,
+      errors: 'This email is already in use'
+    });
+  }
+  next(); // keep going
+};
+
+// TODO - if account is different - what should we do??? 
+// most apps insist on email per account, so we may be good for now
+exports.confirmNewUser2 = async (req, res, next) => {
   // make sure this user with same email does not exist
   const user = await User.findOne({ email: req.body.email });
   if (user) {

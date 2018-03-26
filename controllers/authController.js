@@ -1,5 +1,6 @@
 const passport = require('passport');
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Invitation = mongoose.model('Invitation');
@@ -11,6 +12,61 @@ exports.login = passport.authenticate('local', {
   successRedirect: '/',
   successFlash: 'You are now logged in!'
 });
+
+// traditional route handler, passed req/res
+exports.login2 = (req, res) => {
+  
+    // generate the authenticate method and pass the req/res
+    passport.authenticate('local', function(err, user, info) {
+      if (err) { 
+        return res.status(400).json({
+          success: false,
+          message: err.message
+        });
+      }
+      if (!user) {
+        return res.status(400).json({
+          success: false,
+          message: 'Incorrect email or password - especial'
+        });
+      }
+  
+      // req / res held in closure
+      req.logIn(user, function(err) {
+        if (err) {
+          return res.status(400).json({
+            success: false,
+            message: err.message
+          });
+        }
+        
+        // success - return a token and data (subset of user's data)
+        // This ensures that data cannot be stolen and is secure.
+        // Also, token expires in a month - helping with security
+        const payload = {
+          sub: user._id, // user's id
+          exp: (Date.now() + 2592000000) // 30 days from now
+        }
+
+        // create a token string
+        const token = jwt.sign(payload, process.env.JWT_SECRET);
+        const data = {
+          name: user.name,      // user's name for display
+          account: user.account, // knowing account ID will makes calls easier
+          role: user.role       // user's role - we will double check rights on server side but helps provide clean ux
+        };
+
+        return res.json({
+          success: true,
+          message: 'You have successfully logged in!',
+          token,
+          user: data
+        });
+      });
+  
+    })(req, res);
+  
+  };
 
 exports.logout = (req, res) => {
   req.logout();
@@ -30,6 +86,27 @@ exports.isLoggedIn = (req, res, next) => {
     req.flash('error', 'Oops you must be logged in to do that!');
   }
   res.redirect('/login');
+};
+
+exports.isAuthenticated = async (req, res, next) => {
+  if (!req.headers.authorization) {
+    return res.status(401).end();
+  }
+
+  // get the last part from a authorization header string like "bearer token-value"
+  const token = req.headers.authorization.split(' ')[1];
+
+  // decode the token using a secret key-phrase
+  const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+  if (decoded && decoded.sub) {
+    const userId = decoded.sub;
+    const user = await User.findOne({ _id: userId });
+    if (user) {
+      return next(); // success
+    }
+  }
+  // either token has expired or user not found - call should make user re-login
+  return res.status(401).end();
 };
 
 exports.forgot = async (req, res) => {

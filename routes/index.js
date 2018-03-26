@@ -140,5 +140,13 @@ router.get('/api/search', catchErrors(storeController.searchStores));
 router.get('/api/stores/near', catchErrors(storeController.mapStores));
 router.post('/api/stores/:id/heart', catchErrors(storeController.heartStore));
 router.get('/api/v1/teams', catchErrors(teamController.getTeams2));
+router.post('/api/v1/auth/login', authController.login2);
+router.post('/api/v1/auth/register',
+userController.validateRegister2,
+catchErrors(userController.confirmNewUser2),
+catchErrors(accountController.createAccount),
+catchErrors(userController.register),
+authController.login2
+);
 
 module.exports = router;
