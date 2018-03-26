@@ -18,8 +18,8 @@ class HomePage extends React.Component {
         return (
             <div className="col-md-6 col-md-offset-3">
                 <h1>Hi {user.name}!</h1>
-                <p>You're logged in with React & JWT!!</p>
-                <h3>Users from secure api end point:</h3>
+                <p>You're logged in {user.account.name}!!</p>
+                <h3>Teams from secure api end point:</h3>
                 {teams.loading && <em>Loading teams...</em>}
                 {teams.error && <span className="text-danger">ERROR: {teams.error}</span>}
                 {teams.items &&
