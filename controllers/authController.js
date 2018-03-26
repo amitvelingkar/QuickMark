@@ -100,6 +100,7 @@ exports.isAuthenticated = async (req, res, next) => {
     const userId = decoded.sub;
     const user = await User.findOne({ _id: userId });
     if (user) {
+      req.user = user; // add user to request
       return next(); // success
     }
   }
