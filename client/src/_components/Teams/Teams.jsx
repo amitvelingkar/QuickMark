@@ -12,7 +12,7 @@ class Teams extends React.Component {
     render() {
         const { teams } = this.props;
         return (
-            <div className="sidebar">
+            <div className="inner">
                 <h3>Teams</h3>
                 {teams.loading && <em>Loading teams...</em>}
                 {teams.error && <span className="text-danger">ERROR: {teams.error}</span>}

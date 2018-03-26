@@ -1,4 +1,4 @@
-.nav {
+.header {
     display: -ms-flexbox;
     display: flex;
     list-style: none;
@@ -7,4 +7,36 @@
     -ms-flex-pack: justify;
     justify-content: space-between;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar{
+    background: #6A1B9A;
+    color: #eee;
+    width: 240px;
+}
+
+html {
+    font-size: 10px;
+  }
+  
+body {
+font-size: 1.5rem;
+color: #303030;
+font-family: 'Roboto', sans-serif;
+background:#efefef;
+margin: 0px;
+}
+body:before {
+    content: '';
+    display: block;
+    background: $grad;
+    height: 10px;
+    width: 100%;
+}
+.main {
+    width: 100%;
+    display: flex;
+}
+.inner {
+    padding: 0 2rem;
 }

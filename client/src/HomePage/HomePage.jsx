@@ -19,18 +19,18 @@ class HomePage extends React.Component {
         const { user, teams } = this.props;
         return (
             <div className="container">
-                <div className="nav">
+                <div className="header">
                     <h1>Hi {user.name}!</h1>
                     <p>You're logged in {user.account.name}!!</p>
                     <p>
                         <Link to="/login">Logout</Link>
                     </p>
                 </div>
-                <div className="row">
-                    <div className="col-md6">
+                <div className="main">
+                    <div className="sidebar">
                         <Teams/>
                     </div>
-                    <div className="col">
+                    <div className="content">
                         One of three columns
                     </div>
                 </div>
