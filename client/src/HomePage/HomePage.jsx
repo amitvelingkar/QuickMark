@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { userActions } from '../_actions';
+import { userActions, teamActions } from '../_actions';
 
 class HomePage extends React.Component {
     componentDidMount() {
-        this.props.dispatch(userActions.getAll());
+        this.props.dispatch(teamActions.getAll());
     }
 
     handleDeleteUser(id) {
@@ -14,19 +14,19 @@ class HomePage extends React.Component {
     }
 
     render() {
-        const { user, users } = this.props;
+        const { user, teams } = this.props;
         return (
             <div className="col-md-6 col-md-offset-3">
-                <h1>Hi {user.firstName}!</h1>
+                <h1>Hi {user.name}!</h1>
                 <p>You're logged in with React & JWT!!</p>
                 <h3>Users from secure api end point:</h3>
-                {users.loading && <em>Loading users...</em>}
-                {users.error && <span className="text-danger">ERROR: {users.error}</span>}
-                {users.items &&
+                {teams.loading && <em>Loading teams...</em>}
+                {teams.error && <span className="text-danger">ERROR: {teams.error}</span>}
+                {teams.items &&
                     <ul>
-                        {users.items.map((user, index) =>
-                            <li key={user.id}>
-                                {user.firstName + ' ' + user.lastName}
+                        {teams.items.map((team, index) =>
+                            <li key={team._id}>
+                                {team.name}
                             </li>
                         )}
                     </ul>
@@ -40,11 +40,11 @@ class HomePage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { users, authentication } = state;
+    const { teams, authentication } = state;
     const { user } = authentication;
     return {
         user,
-        users
+        teams
     };
 }
 

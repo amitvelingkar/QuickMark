@@ -15,6 +15,8 @@ exports.login = passport.authenticate('local', {
 
 // traditional route handler, passed req/res
 exports.login2 = (req, res) => {
+    req.body.email = req.body.username;
+    //return res.json(req.body);
   
     // generate the authenticate method and pass the req/res
     passport.authenticate('local', function(err, user, info) {
@@ -50,17 +52,13 @@ exports.login2 = (req, res) => {
 
         // create a token string
         const token = jwt.sign(payload, process.env.JWT_SECRET);
-        const data = {
-          name: user.name,      // user's name for display
-          account: user.account, // knowing account ID will makes calls easier
-          role: user.role       // user's role - we will double check rights on server side but helps provide clean ux
-        };
-
         return res.json({
           success: true,
           message: 'You have successfully logged in!',
           token,
-          user: data
+          name: user.name,
+          role: user.role,       // user's role - we will double check rights on server side but helps provide clean ux
+          account: user.account, // knowing account ID will makes calls easier
         });
       });
   

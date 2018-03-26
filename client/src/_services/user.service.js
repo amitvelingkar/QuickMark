@@ -13,7 +13,7 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
 
-    return fetch('/users/authenticate', requestOptions)
+    return fetch('/api/v1/auth/login', requestOptions)
         .then(response => {
             if (!response.ok) { 
                 return Promise.reject(response.statusText);
@@ -25,6 +25,8 @@ function login(username, password) {
             // login successful if there's a jwt token in the response
             if (user && user.token) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
+                console.log('Login Sucessful - Saving Token to Local Storage');
+                console.log(user);
                 localStorage.setItem('user', JSON.stringify(user));
             }
 
