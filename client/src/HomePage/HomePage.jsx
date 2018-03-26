@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { userActions, teamActions } from '../_actions';
+import { Teams } from '../_components';
+import './HomePage.css';
 
 class HomePage extends React.Component {
     componentDidMount() {
@@ -16,24 +18,22 @@ class HomePage extends React.Component {
     render() {
         const { user, teams } = this.props;
         return (
-            <div className="col-md-6 col-md-offset-3">
-                <h1>Hi {user.name}!</h1>
-                <p>You're logged in {user.account.name}!!</p>
-                <h3>Teams from secure api end point:</h3>
-                {teams.loading && <em>Loading teams...</em>}
-                {teams.error && <span className="text-danger">ERROR: {teams.error}</span>}
-                {teams.items &&
-                    <ul>
-                        {teams.items.map((team, index) =>
-                            <li key={team._id}>
-                                {team.name}
-                            </li>
-                        )}
-                    </ul>
-                }
-                <p>
-                    <Link to="/login">Logout</Link>
-                </p>
+            <div className="container">
+                <div className="nav">
+                    <h1>Hi {user.name}!</h1>
+                    <p>You're logged in {user.account.name}!!</p>
+                    <p>
+                        <Link to="/login">Logout</Link>
+                    </p>
+                </div>
+                <div className="row">
+                    <div className="col-md6">
+                        <Teams/>
+                    </div>
+                    <div className="col">
+                        One of three columns
+                    </div>
+                </div>
             </div>
         );
     }

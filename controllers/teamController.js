@@ -24,7 +24,6 @@ exports.createTeam = async (req, res) => {
 
 exports.getTeams = async (req, res) => {
   // 1. Query the database for a list of all teams
-  // TODO - filter only teams for which current user is owner or member
   const teams = await Team
     .find({ account: req.user.account._id })
     .sort({ created: 'desc' });
