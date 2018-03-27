@@ -6,14 +6,6 @@ import { userActions, teamActions } from '../_actions';
 import { Teams } from '../_components';
 
 class HomePage extends React.Component {
-    componentDidMount() {
-        this.props.dispatch(teamActions.getAll());
-    }
-
-    handleDeleteUser(id) {
-        return (e) => this.props.dispatch(userActions.delete(id));
-    }
-
     render() {
         const { user, teams } = this.props;
         return (
@@ -42,11 +34,10 @@ class HomePage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { teams, authentication } = state;
+    const { authentication } = state;
     const { user } = authentication;
     return {
-        user,
-        teams
+        user
     };
 }
 
