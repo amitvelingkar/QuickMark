@@ -12,18 +12,26 @@ class Teams extends React.Component {
     render() {
         const { teams } = this.props;
         return (
-            <div className="inner">
-                <h3>Teams</h3>
+            <div className='sidebar__section'>
+                <div className='sidebar__section--header'>
+                    <div className='sidebar__section--title'>
+                    Teams
+                    </div>
+                </div>
                 {teams.loading && <em>Loading teams...</em>}
                 {teams.error && <span className="text-danger">ERROR: {teams.error}</span>}
                 {teams.items &&
-                    <ul>
+                    <div>
                         {teams.items.map((team, index) =>
-                            <li key={team._id}>
-                                {team.name}
-                            </li>
+                            <div className='list'>
+                                <div className='list__title'>
+                                    <a key={team._id} href={`/team/${team.slug}`}>
+                                        {team.name}
+                                    </a>
+                                </div>
+                            </div>
                         )}
-                    </ul>
+                    </div>
                 }
             </div>
         );

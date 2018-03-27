@@ -21,8 +21,8 @@ module.exports = {
                 }
             },
             {
-              test: /\.css/,
-              loaders: ['style-loader', 'css-loader'],
+              test: /\.(s*)css$/,
+              loaders: ['style-loader', 'css-loader', 'sass-loader'],
               include: __dirname + '/src'
             }
         ]

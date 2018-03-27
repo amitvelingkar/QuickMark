@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import { userActions, teamActions } from '../_actions';
 import { Teams } from '../_components';
-import './HomePage.css';
 
 class HomePage extends React.Component {
     componentDidMount() {
@@ -19,16 +18,19 @@ class HomePage extends React.Component {
         const { user, teams } = this.props;
         return (
             <div className="container">
-                <div className="header">
-                    <h1>Hi {user.name}!</h1>
-                    <p>You're logged in {user.account.name}!!</p>
-                    <p>
-                        <Link to="/login">Logout</Link>
-                    </p>
+                <div className="sidebar">
+                    <div className="sidebar__header">
+                        <div className="sidebar__header--title">QuickMark</div>
+                    </div>
+                    <Teams/>
                 </div>
                 <div className="main">
-                    <div className="sidebar">
-                        <Teams/>
+                    <div className="header">
+                        <h1>Hi {user.name}!</h1>
+                        <p>You're logged in {user.account.name}!!</p>
+                        <p>
+                            <Link to="/login">Logout</Link>
+                        </p>
                     </div>
                     <div className="content">
                         One of three columns
