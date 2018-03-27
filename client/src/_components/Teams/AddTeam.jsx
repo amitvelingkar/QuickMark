@@ -6,19 +6,26 @@ import Modal from "react-responsive-modal";
 import { teamActions } from '../../_actions';
 
 class AddTeam extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showModal: false
+        };
+    }
+
     onOpenModal = () => {
-        this.props.dispatch(teamActions.showModal());
+        this.setState({ showModal: true });
     };
     onCloseModal = () => {
-        this.props.dispatch(teamActions.closeModal());
+        this.setState({ showModal: false });
     };
 
     render() {
-        const { teams } = this.props; 
+        const { showModal } = this.state; 
         return (
             <div>
                 <button onClick={this.onOpenModal}>Open modal</button>
-                <Modal open={teams.showModal} onClose={this.onCloseModal} little>
+                <Modal open={showModal} onClose={this.onCloseModal} little>
                 <h2>Simple centered modal</h2>
                 </Modal>
             </div>
@@ -27,10 +34,7 @@ class AddTeam extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { teams } = state;
-    return {
-        teams
-    };
+    return {};
 }
 
 const connectedTeams = connect(mapStateToProps)(AddTeam);

@@ -24,9 +24,9 @@ class Teams extends React.Component {
                 {teams.items &&
                     <div>
                         {teams.items.map((team, index) =>
-                            <div className='list'>
+                            <div className='list' key={team._id}>
                                 <div className='list__title'>
-                                    <a key={team._id} href={`/team/${team.slug}`}>
+                                    <a href={`/team/${team.slug}`}>
                                         {team.name}
                                     </a>
                                 </div>
