@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { teamActions } from '../../_actions';
+import { AddTeam } from '../../_components';
 
 class Teams extends React.Component {
     componentDidMount() {
@@ -33,6 +34,7 @@ class Teams extends React.Component {
                         )}
                     </div>
                 }
+                <AddTeam />
             </div>
         );
     }

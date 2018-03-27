@@ -2,7 +2,9 @@ import { teamConstants } from '../_constants';
 import { teamService } from '../_services';
 
 export const teamActions = {
-    getAll
+    getAll,
+    showModal,
+    closeModal
 };
 
 function getAll() {
@@ -19,4 +21,20 @@ function getAll() {
     function request() { return { type: teamConstants.GETALL_REQUEST } }
     function success(teams) { return { type: teamConstants.GETALL_SUCCESS, teams } }
     function failure(error) { return { type: teamConstants.GETALL_FAILURE, error } }
+}
+
+function showModal() {
+    return dispatch => {
+        dispatch(request());
+    };
+
+    function request() { return { type: teamConstants.ADD_SHOW } }
+}
+
+function closeModal() {
+    return dispatch => {
+        dispatch(request());
+    };
+
+    function request() { return { type: teamConstants.ADD_CLOSE } }
 }
