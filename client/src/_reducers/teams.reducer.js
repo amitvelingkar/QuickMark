@@ -16,8 +16,8 @@ export function teams(state = {}, action) {
       };
     case teamConstants.ADD_REQUEST:
       return {
-        adding: true,
-        items: state.items
+        ...state,
+        adding: true
       };
     case teamConstants.ADD_SUCCESS:
       return {
@@ -25,8 +25,18 @@ export function teams(state = {}, action) {
       };
     case teamConstants.ADD_FAILURE:
       return { 
-        addError: action.error,
-        items: state.items
+        ...state,
+        addError: action.error
+      };
+    case teamConstants.ADD_SHOW_MODAL:
+      return {
+        ...state,
+        showAddModal: true
+      };
+    case teamConstants.ADD_CLOSE_MODAL:
+      return {
+        ...state,
+        showAddModal: false
       };
     default:
       return state

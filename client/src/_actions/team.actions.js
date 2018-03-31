@@ -3,7 +3,9 @@ import { teamService } from '../_services';
 
 export const teamActions = {
     getAll,
-    addTeam
+    addTeam,
+    showAddModal,
+    closeAddModal
 };
 
 function getAll() {
@@ -36,4 +38,12 @@ function addTeam(name) {
     function request(name) { return { type: teamConstants.ADD_REQUEST } }
     function success(team) { return { type: teamConstants.ADD_SUCCESS, team } }
     function failure(error) { return { type: teamConstants.ADD_FAILURE, error } }
+}
+
+function showAddModal() {
+    return { type: teamConstants.ADD_SHOW_MODAL };
+}
+
+function closeAddModal() {
+    return { type: teamConstants.ADD_CLOSE_MODAL };
 }

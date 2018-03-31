@@ -16,10 +16,12 @@ class AddTeam extends React.Component {
     }
 
     onOpenModal = () => {
-        this.setState({ showModal: true });
+        const { dispatch } = this.props;
+        dispatch(teamActions.showAddModal());
     };
     onCloseModal = () => {
-        this.setState({ showModal: false });
+        const { dispatch } = this.props;
+        dispatch(teamActions.closeAddModal());
     };
     handleSubmit = (e) => {
         e.preventDefault();
@@ -37,11 +39,12 @@ class AddTeam extends React.Component {
     };
 
     render() {
-        const { showModal, submitted, teamname } = this.state; 
+        const { teams } = this.props; 
+        const { submitted, teamname } = this.state; 
         return (
             <div>
                 <button onClick={this.onOpenModal}>Open modal</button>
-                <Modal open={showModal} onClose={this.onCloseModal} little>
+                <Modal open={teams.showAddModal || false } onClose={this.onCloseModal} little>
                     <div className="modal">
                         <div className="modal__header">
                             <div className="modal__title">Add New Team</div>
@@ -49,17 +52,23 @@ class AddTeam extends React.Component {
                         </div>
                         
                         <form name="form" onSubmit={this.handleSubmit}>
+                            {teams.addError && <span className="text-danger">ERROR: {teams.addError}</span>}
                             <div className="modal__content">
                                 <div className={'form-group' + (submitted && !teamname ? ' has-error' : '')}>
                                     <label htmlFor="teamname">Username</label>
                                     <input type="text" className="form-control" name="teamname" value={teamname} onChange={this.handleChange} />
                                     {submitted && !teamname &&
-                                        <div className="help-block">Team Name is required</div>
+                                        <div className="text-danger">Team Name is required</div>
                                     }
                                 </div>
                             </div>
                             <div className="form-group modal__footer">
-                                <button className="button button--default">Create</button>
+                                {!teams.adding &&
+                                    <button className="button button--default">Create</button>    
+                                }
+                                {teams.adding &&
+                                    <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                }
                             </div>
                         </form>
                     </div>
