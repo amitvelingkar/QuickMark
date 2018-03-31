@@ -16,15 +16,17 @@ export function teams(state = {}, action) {
       };
     case teamConstants.ADD_REQUEST:
       return {
-        loading: true
+        adding: true,
+        items: state.items
       };
     case teamConstants.ADD_SUCCESS:
       return {
-        items: action.teams
+        items: [action.team, ...state.items]
       };
     case teamConstants.ADD_FAILURE:
       return { 
-        error: action.error
+        addError: action.error,
+        items: state.items
       };
     default:
       return state

@@ -24,6 +24,12 @@ class AddTeam extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ submitted: true });
+        this.setState({ submitted: true });
+        const { teamname } = this.state;
+        const { dispatch } = this.props;
+        if (teamname) {
+            dispatch(teamActions.addTeam(teamname));
+        }
     }
     handleChange = (e) => {
         const { name, value } = e.target;
@@ -64,7 +70,10 @@ class AddTeam extends React.Component {
 }
 
 function mapStateToProps(state) {
-    return {};
+    const { teams } = state;
+    return {
+        teams
+    };
 }
 
 const connectedTeams = connect(mapStateToProps)(AddTeam);
