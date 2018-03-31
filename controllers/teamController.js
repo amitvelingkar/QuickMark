@@ -51,6 +51,13 @@ exports.createTeam2 = async (req, res, next) => {
   }
 };
 
+exports.deleteTeam = async (req, res, next) => {
+  const team = await Team.findOneAndRemove({ _id: req.params.id }, req.body);
+  if (team) {
+    res.json(team);
+  }
+};
+
 
 
 const confirmOwner = (team, user) => {

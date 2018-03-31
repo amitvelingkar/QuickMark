@@ -5,7 +5,8 @@ export const teamActions = {
     getAll,
     addTeam,
     showAddModal,
-    closeAddModal
+    closeAddModal,
+    deleteTeam
 };
 
 function getAll() {
@@ -46,4 +47,17 @@ function showAddModal() {
 
 function closeAddModal() {
     return { type: teamConstants.ADD_CLOSE_MODAL };
+}
+
+function deleteTeam(id, index) {
+    return dispatch => {
+        teamService.deleteTeam(id)
+            .then(
+                team => dispatch(success(team)),
+                error => dispatch(failure(error))
+            );
+    };
+
+    function success(team) { return { type: teamConstants.DELETE_SUCCESS, team } }
+    function failure(error) { return { type: teamConstants.DELETE_FAILURE, error } }
 }

@@ -9,7 +9,9 @@ class Teams extends React.Component {
     componentDidMount() {
         this.props.dispatch(teamActions.getAll());
     }
-
+    deleteTeam = (id) => {
+        this.props.dispatch(teamActions.deleteTeam(id));
+    }
     render() {
         const { teams } = this.props;
         return (
@@ -29,6 +31,11 @@ class Teams extends React.Component {
                                     <a href={`/team/${team.slug}`}>
                                         {team.name}
                                     </a>
+                                </div>
+                                <div className='list__actions'>
+                                    <div className="list__action list__action--delete">
+                                        <span onClick={ () => {this.deleteTeam(team._id)}}>delete</span>
+                                    </div>
                                 </div>
                             </div>
                         )}

@@ -28,6 +28,16 @@ export function teams(state = {}, action) {
         ...state,
         addError: action.error
       };
+    case teamConstants.DELETE_SUCCESS:
+      return {
+        ...state,
+        items: state.items.filter(item => item._id !== action.team._id)
+      };
+    case teamConstants.DELETE_FAILURE:
+      return { 
+        ...state,
+        error: action.error
+      };
     case teamConstants.ADD_SHOW_MODAL:
       return {
         ...state,

@@ -147,6 +147,10 @@ router.post('/api/v1/teams',
   catchErrors(authController.isAuthenticated),
   catchErrors(teamController.createTeam2)
 );
+router.delete('/api/v1/teams/:id',
+  catchErrors(authController.isAuthenticated),
+  catchErrors(teamController.deleteTeam)
+);
 router.post('/api/v1/auth/login', authController.login2);
 router.post('/api/v1/auth/register',
 userController.validateRegister2,
