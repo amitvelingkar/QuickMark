@@ -17,6 +17,8 @@ class AddTeam extends React.Component {
 
     onOpenModal = () => {
         const { dispatch } = this.props;
+        this.state.teamname = '';
+        this.state.submitted= false,
         dispatch(teamActions.showAddModal());
     };
     onCloseModal = () => {
