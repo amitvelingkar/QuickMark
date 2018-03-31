@@ -143,6 +143,10 @@ router.get('/api/v1/teams',
   catchErrors(authController.isAuthenticated),
   catchErrors(teamController.getTeams2)
 );
+router.post('/api/v1/teams',
+  catchErrors(authController.isAuthenticated),
+  catchErrors(teamController.createTeam2)
+);
 router.post('/api/v1/auth/login', authController.login2);
 router.post('/api/v1/auth/register',
 userController.validateRegister2,

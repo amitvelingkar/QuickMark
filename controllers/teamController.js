@@ -41,6 +41,17 @@ exports.getTeams2 = async (req, res) => {
   res.json(teams);
 };
 
+/* SAVE TEAM */
+exports.createTeam2 = async (req, res, next) => {
+  req.body.owner = req.user._id;
+  req.body.account = req.user.account;
+  const team = await (new Team(req.body)).save();
+  if (team) {
+    res.json(team);
+  }
+};
+
+
 
 const confirmOwner = (team, user) => {
   if (!team.owner.equals(user._id)) {
