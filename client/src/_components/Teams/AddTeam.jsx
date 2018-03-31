@@ -21,6 +21,14 @@ class AddTeam extends React.Component {
     onCloseModal = () => {
         this.setState({ showModal: false });
     };
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.setState({ submitted: true });
+    }
+    handleChange = (e) => {
+        const { name, value } = e.target;
+        this.setState({ [name]: value });
+    };
 
     render() {
         const { showModal, submitted, teamname } = this.state; 
