@@ -58,7 +58,7 @@ class AddTeam extends React.Component {
                             <div className="modal__content">
                                 <div className={'form-group' + (submitted && !teamname ? ' has-error' : '')}>
                                     <label htmlFor="teamname">Username</label>
-                                    <input type="text" className="form-control" name="teamname" value={teamname} onChange={this.handleChange} />
+                                    <input type="text" className="form-control" name="teamname" value={teamname} onChange={this.handleChange} autoFocus/>
                                     {submitted && !teamname &&
                                         <div className="text-danger">Team Name is required</div>
                                     }
