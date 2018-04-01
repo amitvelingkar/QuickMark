@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Modal from "react-responsive-modal";
 
 import { teamActions } from '../../_actions';
+import Icon from '../../resources/images/add_circle.svg';
 
 class AddTeam extends React.Component {
     constructor(props) {
@@ -45,7 +46,9 @@ class AddTeam extends React.Component {
         const { submitted, teamname } = this.state; 
         return (
             <div>
-                <button onClick={this.onOpenModal}>Open modal</button>
+                <div className="sidebar__section--add" onClick={this.onOpenModal}>
+                    <Icon/>
+                </div>
                 <Modal open={teams.showAddModal || false } onClose={this.onCloseModal} little>
                     <div className="modal">
                         <div className="modal__header">

@@ -25,6 +25,10 @@ module.exports = {
               test: /\.(s*)css$/,
               loaders: ['style-loader', 'css-loader', 'sass-loader'],
               include: __dirname + '/src'
+            },
+            {
+                test: /\.svg$/,
+                loaders: ['babel-loader', 'svg-react-loader']
             }
         ]
     },

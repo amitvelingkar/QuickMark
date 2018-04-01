@@ -20,6 +20,7 @@ class Teams extends React.Component {
                     <div className='sidebar__section--title'>
                     Teams
                     </div>
+                    <AddTeam />
                 </div>
                 {teams.loading && <em>Loading teams...</em>}
                 {teams.error && <span className="text-danger">ERROR: {teams.error}</span>}
@@ -41,7 +42,6 @@ class Teams extends React.Component {
                         )}
                     </div>
                 }
-                <AddTeam />
             </div>
         );
     }
