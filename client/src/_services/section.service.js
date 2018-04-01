@@ -16,15 +16,14 @@ function getAll(team) {
     return fetch(`/api/v1/team/${team}/sections`, requestOptions).then(handleResponse);
 }
 
-function addSection(name) {
-    console.log(name);
+function addSection(team, name) {
     const requestOptions = {
         method: 'POST',
         headers: authHeader(),
         body: JSON.stringify({ name })
     };
 
-    return fetch('/api/v1/sections', requestOptions)
+    return fetch(`/api/v1/team/${team}/sections`, requestOptions)
         .then(response => {
             if (!response.ok) { 
                 return Promise.reject(response.statusText);

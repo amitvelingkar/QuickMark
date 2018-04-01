@@ -1,0 +1,31 @@
+.list__actions {
+    position: relative;
+    z-index: 2;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+  }
+  
+  .list__action {
+    font-size: 10px;
+    svg {
+      width: 25px;
+      height: 25px;
+      fill: #ccc;
+    }
+    &--edit {
+      a {
+        border-bottom: 0;
+      }
+    }
+    &--text {
+      font-size: 0.8em;
+      text-transform: uppercase;
+      margin-right: 10px;
+      color: #ccc;
+    }
+  }
+  

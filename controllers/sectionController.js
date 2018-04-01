@@ -60,8 +60,13 @@ exports.getSections2 = async (req, res) => {
 
 /* SAVE TEAM */
 exports.createSection2 = async (req, res, next) => {
+  const team = await Team.findOne({ slug: req.params.slug });
+  if (!team) {
+    return res.status(404).send('Team Not Found');
+  }
+
   req.body.owner = req.user._id;
-  req.body.account = req.user.account;
+  req.body.team = team._id;
   const section = await (new Section(req.body)).save();
   if (section) {
     res.json(section);

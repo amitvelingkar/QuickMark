@@ -25,11 +25,11 @@ function getAll(team) {
     function failure(error) { return { type: sectionConstants.GETALL_FAILURE, error } }
 }
 
-function addSection(name) {
+function addSection(teamslug, name) {
     return dispatch => {
         dispatch(request());
 
-        sectionService.addSection(name)
+        sectionService.addSection(teamslug, name)
             .then(
                 section => dispatch(success(section)),
                 error => dispatch(failure(error))
