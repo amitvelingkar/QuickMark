@@ -5,6 +5,7 @@ import IconDelete from '../../resources/images/delete.svg';
 
 import { sectionActions } from '../../_actions';
 import { AddSection } from './AddSection';
+import { AddLink } from '../Links/AddLink';
 
 class Sections extends React.Component {
     componentDidMount() {
@@ -42,6 +43,16 @@ class Sections extends React.Component {
                                         </div>
                                     </div>
                                 </div>
+                                {section.links &&
+                                    <div className="link">
+                                        {section.links.map((link, index) =>
+                                            <div key={link._id} className="link__title">
+                                                <a href={link.url} className="list__link">{link.name || link.url}</a>
+                                            </div>
+                                        )}
+                                    </div>
+                                }
+                                <AddLink sectionId={section._id} />
                             </div>
                         )}
                     </div>

@@ -4,6 +4,7 @@ import { authentication } from './authentication.reducer';
 import { users } from './users.reducer';
 import { teams } from './teams.reducer';
 import { sections } from './sections.reducer';
+import { links } from './links.reducer';
 import { alert } from './alert.reducer';
 
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   users,
   teams,
   sections,
+  links,
   alert
 });
 

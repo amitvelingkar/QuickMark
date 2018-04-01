@@ -163,6 +163,16 @@ router.delete('/api/v1/sections/:id',
   catchErrors(authController.isAuthenticated),
   catchErrors(sectionController.deleteSection)
 );
+
+router.post('/api/v1/section/:id/links',
+catchErrors(authController.isAuthenticated),
+catchErrors(linkController.createLink2)
+);
+router.delete('/api/v1/links/:id',
+catchErrors(authController.isAuthenticated),
+catchErrors(linkController.deleteLink)
+);
+
 router.post('/api/v1/auth/login', authController.login2);
 router.post('/api/v1/auth/register',
 userController.validateRegister2,

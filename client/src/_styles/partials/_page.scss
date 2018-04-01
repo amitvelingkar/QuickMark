@@ -56,7 +56,15 @@
             .link__actions {
                 opacity: 1;
             }
-        }        
+        }
+        &__add{
+            color: #999;
+            cursor: pointer;
+            padding: 10px 0px;
+            &:hover{
+                color: black;
+            }
+        }       
     }
     &__header {
         border-bottom: 1px solid #eee;

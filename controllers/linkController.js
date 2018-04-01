@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Link = mongoose.model('Link');
+const Section = mongoose.model('Section');
 const uuid = require('uuid');
 
 exports.addLink = (req, res) => {
@@ -40,4 +41,28 @@ exports.editLink = async (req, res) => {
   confirmOwner(link, req.user);
   // 3. Render out the edit form so the user can update their link
   res.render('editLink', { title: `Edit ${link.name}`, link, section: link.section });
+};
+
+/* SAVE TEAM */
+exports.createLink2 = async (req, res, next) => {
+  const section = await Section.findOne({ _id: req.params.id });
+
+  // not really needed since we have the id but good to prevent orphan links
+  if (!section) {
+    return res.status(404).send('Section Not Found');
+  }
+
+  req.body.owner = req.user._id;
+  req.body.section = section._id;
+  const link = await (new Link(req.body)).save();
+  if (link) {
+    res.json(link);
+  }
+};
+
+exports.deleteLink = async (req, res, next) => {
+  const link = await Link.findOneAndRemove({ _id: req.params.id }, req.body);
+  if (link) {
+    res.json(link);
+  }
 };
