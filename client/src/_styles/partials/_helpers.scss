@@ -5,11 +5,20 @@
 
 .button {
   border: 0;
-  background: $yellow;
-  color: $black;
+  background: #ccc;
+  color: #303030;
   font-family: 'Fira Sans', sans-serif;
   font-weight: 600;
-  margin-top: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.15);
+  margin-left: 20px;
+  min-width: 120px;
+  max-width: 150px;
+  text-align: center;
+  &--default {
+      background: #FFC40E;
+  }
 }
 
 .avatar {

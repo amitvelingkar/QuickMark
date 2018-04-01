@@ -1,13 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
 
 import { userActions, teamActions } from '../_actions';
-import { Teams } from '../_components';
+import { Teams, Sections } from '../_components';
 
 class HomePage extends React.Component {
+    constructor(props) {
+        super(props);
+    }
     render() {
-        const { user, teams } = this.props;
+        const { user, teams, match } = this.props;
         return (
             <div className="container">
                 <div className="sidebar">
@@ -25,7 +29,14 @@ class HomePage extends React.Component {
                         </p>
                     </div>
                     <div className="content">
-                        One of three columns
+                        <Route path={`${match.url}/:slug`}
+                            component={Sections}
+                        />
+                        <Route exact path={match.url}
+                            render={() => (
+                            <div>Please select a team.</div>
+                            )}
+                        />
                     </div>
                 </div>
             </div>

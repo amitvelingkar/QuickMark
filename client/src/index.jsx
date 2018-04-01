@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import { store } from './_helpers';
@@ -10,8 +11,10 @@ import { configureFakeBackend } from './_helpers';
 configureFakeBackend();
 
 render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
+    <BrowserRouter>
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </BrowserRouter>,
     document.getElementById('app')
 );

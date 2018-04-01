@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Section = mongoose.model('Section');
+const Team = mongoose.model('Team');
 const uuid = require('uuid');
 
 exports.addSection = (req, res) => {
@@ -44,4 +45,32 @@ exports.getSectionBySlug = async (req, res, next) => {
   const section = await Section.findOne({ slug: req.params.slug }).populate('owner team');
   if (!section) return next();
   res.render('section', { section, title: section.name });
+};
+
+exports.getSections2 = async (req, res) => {
+  //res.json(req.params);
+  const team = await Team.findOne({ slug: req.params.slug });
+  if (!team) {
+    return res.status(404).send('Team Not Found');
+  }
+  
+  const sections = await Section.find({ team: team._id });
+  res.json(sections);
+};
+
+/* SAVE TEAM */
+exports.createSection2 = async (req, res, next) => {
+  req.body.owner = req.user._id;
+  req.body.account = req.user.account;
+  const section = await (new Section(req.body)).save();
+  if (section) {
+    res.json(section);
+  }
+};
+
+exports.deleteSection = async (req, res, next) => {
+  const section = await Section.findOneAndRemove({ _id: req.params.id }, req.body);
+  if (section) {
+    res.json(section);
+  }
 };

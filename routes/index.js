@@ -151,6 +151,18 @@ router.delete('/api/v1/teams/:id',
   catchErrors(authController.isAuthenticated),
   catchErrors(teamController.deleteTeam)
 );
+router.get('/api/v1/team/:slug/sections',
+  catchErrors(authController.isAuthenticated),
+  catchErrors(sectionController.getSections2)
+);
+router.post('/api/v1/team/:slug/sections',
+  catchErrors(authController.isAuthenticated),
+  catchErrors(sectionController.createSection2)
+);
+router.delete('/api/v1/sections/:id',
+  catchErrors(authController.isAuthenticated),
+  catchErrors(sectionController.deleteSection)
+);
 router.post('/api/v1/auth/login', authController.login2);
 router.post('/api/v1/auth/register',
 userController.validateRegister2,
