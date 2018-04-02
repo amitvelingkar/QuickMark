@@ -1,0 +1,9 @@
+mixin teamCard(team = {})
+  .list
+    .list__title
+      a(href=`/team/${team.slug}`) #{team.name}
+    .list__actions
+      if user && (team.owner.equals(user._id) || h.isAccountAdmin(user))
+        .list__action.list__action--edit
+          a(href=`/teams/${team._id}/edit`)
+            != h.icon('pencil')

@@ -1,0 +1,25 @@
+extends layout2
+include mixins/_teamCard
+include mixins/_sectionCard
+
+block sidebar
+  .sidebar__section
+    .sidebar__section--header
+      .sidebar__section--title Teams
+      .sidebar__addTeam 
+        != h.icon('add_circle')
+    each team in teams
+      +teamCard(team)
+    //.sidebar__add.sidebar__add--team Create New Team
+block content
+  .inner
+    .pageheader
+      .title
+        a(href=`/team/${curTeam.slug}`) #{curTeam.name}
+      .actions
+        .actions--item
+          a(href=`/team/${curTeam._id}/sections/add`) Create Sections
+    .sections
+      each section in curTeam.sections
+        +sectionCard(section)
+    pre= h.dump(curTeam)

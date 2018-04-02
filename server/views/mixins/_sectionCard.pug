@@ -1,0 +1,16 @@
+include _linkCard
+
+mixin sectionCard(section = {})
+  .section
+    .section__header
+      .list__title
+        a(href=`/section/${section.slug}`) #{section.name}
+      .list__actions
+        if user && section.owner.equals(user._id)
+          .list__action.list__action--edit
+            a(href=`/sections/${section._id}/edit`)
+              != h.icon('pencil')
+    .section_content
+      each link in section.links
+        +linkCard(link)
+

@@ -1,0 +1,28 @@
+.empty {
+    margin: 10px 0;
+    width: 100%;
+    padding: 2rem;
+    align-items: center;
+    border: 3px dashed #999;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    &__icon{
+        display: flex;
+        justify-content: center;
+        height: 64px;
+        svg {
+            width: 64px;
+            fill: #999;
+        }
+    }
+    &__text {
+        font-size: 1.2em;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        color: #999;
+    }
+  }
+  
+  
