@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 
 import { userActions, teamActions } from '../_actions';
-import { Teams, Sections } from '../_components';
+import { Teams, Sections, Nav } from '../_components';
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -22,11 +22,7 @@ class HomePage extends React.Component {
                 </div>
                 <div className="main">
                     <div className="header">
-                        <h1>Hi {user.name}!</h1>
-                        <p>You're logged in {user.account.name}!!</p>
-                        <p>
-                            <Link to="/login">Logout</Link>
-                        </p>
+                        <Nav />
                     </div>
                     <div className="content">
                         <Route path={`${match.url}/:slug`}
