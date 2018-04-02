@@ -49,12 +49,22 @@ export function sections(state = {}, action) {
         showAddModal: false
       };
     case sectionConstants.ADD_LINK:
-      console.log()
       return Object.assign({}, state, {
         items: state.items.map((section, index) => {
           if (section._id === action.link.section) {
             return Object.assign({}, section, {
               links: [action.link, ...section.links]
+            })
+          }
+          return section
+        })
+      });
+    case sectionConstants.DELETE_LINK:
+      return Object.assign({}, state, {
+        items: state.items.map((section, index) => {
+          if (section._id === action.link.section) {
+            return Object.assign({}, section, {
+              links: section.links.filter(item => item._id !== action.link._id)
             })
           }
           return section

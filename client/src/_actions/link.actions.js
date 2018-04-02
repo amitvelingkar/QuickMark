@@ -62,6 +62,6 @@ function deleteLink(id, index) {
             );
     };
 
-    function success(link) { return { type: linkConstants.DELETE_SUCCESS, link } }
+    function success(link) { return { type: sectionConstants.DELETE_LINK, link } }
     function failure(error) { return { type: linkConstants.DELETE_FAILURE, error } }
 }

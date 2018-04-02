@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import IconDelete from '../../resources/images/delete.svg';
 
-import { sectionActions } from '../../_actions';
+import { sectionActions, linkActions } from '../../_actions';
 import { AddSection } from './AddSection';
 import { AddLink } from '../Links/AddLink';
 
@@ -14,6 +14,9 @@ class Sections extends React.Component {
     }
     deleteSection = (id) => {
         this.props.dispatch(sectionActions.deleteSection(id));
+    }
+    deleteLink = (id) => {
+        this.props.dispatch(linkActions.deleteLink(id));
     }
     render() {
         const { sections, match } = this.props;
@@ -49,6 +52,11 @@ class Sections extends React.Component {
                                             <div className="link" key={link._id}>
                                                 <div className="link__title">
                                                     <a href={link.url} className="list__link">{link.name || link.url}</a>
+                                                </div>
+                                                <div className="link__actions">
+                                                    <div className="list__action list__action--delete" onClick={ () => {this.deleteLink(link._id)}}>
+                                                        <IconDelete />
+                                                    </div>
                                                 </div>
                                             </div>
                                         )}
