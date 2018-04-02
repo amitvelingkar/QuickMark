@@ -2,5 +2,13 @@
 node_modules/*
 package-lock.json
 variables.env
+server/public/dist/*
+client/yarn.lock
+server/node_modules/*
+package-lock.json
+variables.env
 public/dist/*
 client/yarn.lock
+server/node_modules/.bin/acorn
+server/public/images/photos/*
+server/public/uploads/*
