@@ -37,7 +37,7 @@ class Nav extends React.Component {
                             </Link>
                         </li>
                         <li className="nav__item">
-                            <Link className="nav__link" to="/logout">
+                            <Link className="nav__link" to="/login">
                                 <IconLogout/><span>Logout</span>
                             </Link>
                         </li>

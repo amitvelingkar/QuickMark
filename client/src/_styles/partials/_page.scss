@@ -74,3 +74,16 @@
         justify-content: space-between;
     }
 }
+
+.container {
+    &__small {
+        max-width:600px;
+        margin: 0 auto;
+        @media all and (max-width: 900px) {
+          padding: 2rem;
+        }
+        &--flashes {
+          padding:0;
+        }
+    }
+}

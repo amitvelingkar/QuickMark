@@ -29,5 +29,10 @@ input, textarea {
       margin-bottom: 2rem;
       border-bottom: 1px solid $grey;
     }
+    &__footer{
+      display: flex;
+      margin-top: 2rem;
+      justify-content: flex-end;
+    }
   }
   
