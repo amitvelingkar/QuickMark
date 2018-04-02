@@ -15,9 +15,6 @@ exports.login = passport.authenticate('local', {
 
 // traditional route handler, passed req/res
 exports.login2 = (req, res) => {
-    req.body.email = req.body.username;
-    //return res.json(req.body);
-  
     // generate the authenticate method and pass the req/res
     passport.authenticate('local', function(err, user, info) {
       if (err) { 

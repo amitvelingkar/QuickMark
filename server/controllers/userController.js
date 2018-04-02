@@ -45,8 +45,6 @@ exports.validateRegister2 = (req, res, next) => {
     gmail_remove_subaddress: false
   });
   req.checkBody('password', 'Password Cannot be Blank!').notEmpty();
-  req.checkBody('password-confirm', 'Confirmed Password cannot be blank!').notEmpty();
-  req.checkBody('password-confirm', 'Oops! Your passwords do not match').equals(req.body.password);
 
   const errors = req.validationErrors();
   if (errors) {
@@ -80,8 +78,7 @@ exports.confirmNewUser2 = async (req, res, next) => {
   // make sure this user with same email does not exist
   const user = await User.findOne({ email: req.body.email });
   if (user) {
-    req.flash('error', `<strong>${user.email}</strong> is already registered with QuickMark. Please try log-in or password recovery.`);
-    return res.redirect('back');
+    return res.status(400).send('Email is already registered.');
   }
   next(); // keep going
 };

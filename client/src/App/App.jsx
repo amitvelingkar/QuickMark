@@ -7,6 +7,7 @@ import { alertActions } from '../_actions';
 import { PrivateRoute } from '../_components';
 import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
+import { RegisterPage } from '../RegisterPage';
 import '../_styles/style.scss';
 
 class App extends React.Component {
@@ -31,6 +32,7 @@ class App extends React.Component {
                     <div>
                         <PrivateRoute path="/team" component={HomePage} />
                         <Route path="/login" component={LoginPage} />
+                        <Route path="/register" component={RegisterPage} />
                     </div>
                 </Router>
             </div>
