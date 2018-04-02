@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Nav } from '../_components';
 
 import { userActions } from '../_actions';
 
@@ -41,9 +42,10 @@ class LoginPage extends React.Component {
         const { loggingIn } = this.props;
         const { username, password, submitted } = this.state;
         return (
-            <div className="inner">
+            <div>
+                <Nav />
                 <div className="container__small">
-                    <h2>QuickMark Login</h2>
+                    <h2>Login</h2>
                     <form name="form" className="form" onSubmit={this.handleSubmit}>
                         <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
                             <label htmlFor="username">Username</label>
@@ -59,6 +61,9 @@ class LoginPage extends React.Component {
                                 <div className="help-block">Password is required</div>
                             }
                         </div>
+                        <Link className="form__link" to="/forgot">
+                            <span>Forgot your password?</span>
+                        </Link>
                         <div className="form-group form__footer">
                             <button className="button button--default">Login</button>
                             {loggingIn &&

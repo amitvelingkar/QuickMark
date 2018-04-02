@@ -34,5 +34,12 @@ input, textarea {
       margin-top: 2rem;
       justify-content: flex-end;
     }
+    &__link{
+      color: $linkblue;
+      margin-top: 10px;
+      color: #2979FF;
+      font-weight: 600;
+      display: block;
+    }
   }
   
