@@ -46,10 +46,10 @@ class Sections extends React.Component {
                                 {section.links &&
                                     <div className="links">
                                         {section.links.map((link, index) =>
-                                            <div className="link">
-                                            <div key={link._id} className="link__title">
-                                                <a href={link.url} className="list__link">{link.name || link.url}</a>
-                                            </div>
+                                            <div className="link" key={link._id}>
+                                                <div className="link__title">
+                                                    <a href={link.url} className="list__link">{link.name || link.url}</a>
+                                                </div>
                                             </div>
                                         )}
                                     </div>

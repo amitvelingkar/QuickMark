@@ -1,4 +1,4 @@
-import { linkConstants } from '../_constants';
+import { linkConstants, sectionConstants } from '../_constants';
 import { linkService } from '../_services';
 
 export const linkActions = {
@@ -31,13 +31,17 @@ function addLink(sectionId, url, name) {
 
         linkService.addLink(sectionId, url, name)
             .then(
-                link => dispatch(success(link)),
+                link => {
+                    dispatch(close());
+                    dispatch(success(link));
+                },
                 error => dispatch(failure(error))
             );
     };
 
     function request(name) { return { type: linkConstants.ADD_REQUEST } }
-    function success(link) { return { type: linkConstants.ADD_SUCCESS, link } }
+    function success(link) { return { type: sectionConstants.ADD_LINK, link } }
+    function close() { return { type: linkConstants.ADD_CLOSE_MODAL } }
     function failure(error) { return { type: linkConstants.ADD_FAILURE, error } }
 }
 
