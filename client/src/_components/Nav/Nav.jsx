@@ -13,10 +13,18 @@ class Nav extends React.Component {
         super(props);
     }
     render() {
+        const { user } = this.props;
+        const { account } = user;
         return (
             <div className="top">
                 <div className="nav">
-                    <div className="nav__section"></div>
+                    <div className="nav__section">
+                        <li className="nav__item">
+                            <Link className="nav__link" to="/team">
+                                <div className="nav__title">{account.name}</div>
+                            </Link>
+                        </li>
+                    </div>
                     <div className="nav__section">
                         <li className="nav__item">
                             <Link className="nav__link" to="/admin">
