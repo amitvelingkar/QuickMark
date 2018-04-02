@@ -25,11 +25,11 @@ function getAll(section) {
     function failure(error) { return { type: linkConstants.GETALL_FAILURE, error } }
 }
 */
-function addLink(sectionslug, url, name) {
+function addLink(sectionId, url, name) {
     return dispatch => {
         dispatch(request());
 
-        linkService.addLink(sectionslug, url, name)
+        linkService.addLink(sectionId, url, name)
             .then(
                 link => dispatch(success(link)),
                 error => dispatch(failure(error))

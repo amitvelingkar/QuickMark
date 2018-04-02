@@ -20,7 +20,6 @@ const linkSchema = new mongoose.Schema({
   },
   url: {
     type: String,
-    unique: true,
     lowercase: true,
     trim: true,
     validate: [validator.isURL, 'Invalid URL - must start with http:// or https://'],
