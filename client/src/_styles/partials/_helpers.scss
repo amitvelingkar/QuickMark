@@ -40,3 +40,36 @@ pre.error {
   line-height: 3;
   white-space: pre-line;
 }
+
+.help{
+  color: #00c853;
+  &__block{
+    font-size: 2rem;
+    font-family: 'Fira Sans', sans-serif;
+    letter-spacing: -1px;
+    margin-bottom: 1em;
+    
+  }
+}
+
+.error{
+  color: #c50000;
+  &__block{
+    font-size: 2rem;
+    font-family: 'Fira Sans', sans-serif;
+    letter-spacing: -1px;
+    margin-bottom: 1em;
+    
+  }
+}
+
+.info{
+  color: #424242;
+  &__block{
+    font-size: 2rem;
+    font-family: 'Fira Sans', sans-serif;
+    letter-spacing: -1px;
+    margin-bottom: 1em;
+    
+  }
+}

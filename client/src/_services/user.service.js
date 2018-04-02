@@ -3,6 +3,8 @@ import { authHeader } from '../_helpers';
 export const userService = {
     login,
     register,
+    forgot,
+    reset,
     logout,
     getAll
 };
@@ -35,7 +37,7 @@ function login(email, password) {
         });
 }
 
-function register(name, email, accountName, password) {
+function register(email) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -61,6 +63,51 @@ function register(name, email, accountName, password) {
 
             return user;
         });
+}
+
+function forgot(email) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+    };
+
+    return fetch('/api/v1/auth/forgot', requestOptions)
+    .then(response => {
+        if (!response.ok) { 
+            return Promise.reject(response.statusText);
+        }
+
+        return response.json();
+    });
+}
+
+function reset(password, token) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password })
+    };
+
+    return fetch('/api/v1/auth/reset/'+token, requestOptions)
+    .then(response => {
+        if (!response.ok) { 
+            return Promise.reject(response.statusText);
+        }
+
+        return response.json();
+    })
+    .then(user => {
+        // login successful if there's a jwt token in the response
+        if (user && user.token) {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            console.log('Login Sucessful - Saving Token to Local Storage');
+            console.log(user);
+            localStorage.setItem('user', JSON.stringify(user));
+        }
+
+        return user;
+    });
 }
 
 function logout() {

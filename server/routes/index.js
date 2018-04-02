@@ -175,11 +175,18 @@ catchErrors(linkController.deleteLink)
 
 router.post('/api/v1/auth/login', authController.login2);
 router.post('/api/v1/auth/register',
-userController.validateRegister2,
+  userController.validateRegister2,
   catchErrors(userController.confirmNewUser2),
   catchErrors(accountController.createAccount),
   catchErrors(userController.register),
   authController.login2
+);
+router.post('/api/v1/auth/forgot', 
+  catchErrors(authController.forgot2)
+);
+router.post('/api/v1/auth/reset/:token', 
+  authController.verifyPasswordRequirement,
+  catchErrors(authController.update2)
 );
 
 module.exports = router;

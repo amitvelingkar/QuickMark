@@ -7,6 +7,8 @@ export const userActions = {
     login,
     logout,
     register,
+    forgot,
+    reset,
     getAll
 };
 
@@ -52,6 +54,45 @@ function register(username, email, accountname, password) {
     function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
     function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+}
+
+function forgot(email) {
+    return dispatch => {
+        dispatch(request());
+        userService.forgot(email)
+            .then(
+                message => { 
+                    dispatch(success(message));
+                },
+                error => {
+                    dispatch(failure(error));
+                }
+            );
+    };
+    function request() { return { type: userConstants.FORGOT_REQUEST } }
+    function success(message) { return { type: userConstants.FORGOT_SUCCESS, message } }
+    function failure(error) { return { type: userConstants.FORGOT_FAILURE, error } }
+}
+
+function reset(password, token) {
+    return dispatch => {
+        dispatch(request());
+        userService.reset(password, token)
+            .then(
+                user => { 
+                    dispatch(success());
+                    dispatch(redirect(user));
+                    history.push('/team');
+                },
+                error => {
+                    dispatch(failure(error));
+                }
+            );
+    };
+    function request() { return { type: userConstants.RESET_REQUEST } }
+    function success() { return { type: userConstants.RESET_SUCCESS } }
+    function redirect(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.RESET_FAILURE, error } }
 }
 
 function logout() {

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Invitation = mongoose.model('Invitation');
 const promisify = require('es6-promisify');
+const mail = require('../handlers/mail');
 
 exports.login = passport.authenticate('local', {
   failureRedirect: '/login',
@@ -218,3 +219,64 @@ exports.addUser = async (req, res) => {
   res.redirect('/');
 };
 
+exports.forgot2 = async (req, res) => {
+  const host = 'http://localhost:8080';
+  // 1. See if a user with that email exists
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return res.status(400).send('No account with that email exists.');
+  }
+  // 2. Set reset tokens and expiry on their account
+  user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
+  user.resetPasswordExpires = Date.now() + 3600000; // 1 hour from now
+  await user.save();
+  // 3. Send them an email with the token
+  const resetURL = `${host}/reset/${user.resetPasswordToken}`;
+  //res.send(resetURL);
+  await mail.send({
+    user,
+    filename: 'password-reset',
+    subject: 'Password Reset',
+    resetURL
+  });
+  return res.json({
+    message: 'You have been emailed a password reset link.'
+  });
+};
+
+exports.confirmedPasswords2 = (req, res, next) => {
+  if (req.body.password === req.body['password-confirm']) {
+    next(); // keepit going!
+    return;
+  }
+  return res.status(400).send('Passwords do not match!');
+};
+
+exports.verifyPasswordRequirement = (req, res, next) => {
+  if (req.body.password.length > 4) {
+    next(); // keepit going!
+    return;
+  }
+  return res.status(400).send('Passwords must be at least 5 characters in length!');
+};
+
+exports.update2 = async (req, res) => {
+  const user = await User.findOne({
+    resetPasswordToken: req.params.token,
+    resetPasswordExpires: { $gt: Date.now() }
+  });
+
+  if (!user) {
+    return res.status(400).send('Password reset is invalid or has expired');
+  }
+
+  const setPassword = promisify(user.setPassword, user);
+  await setPassword(req.body.password);
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpires = undefined;
+  const updatedUser = await user.save();
+  await req.login(updatedUser);
+
+  // success
+  return res.json(updatedUser);
+};
