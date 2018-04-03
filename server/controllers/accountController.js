@@ -31,3 +31,20 @@ exports.getUsers = async (req, res) => {
 
   res.render('users', { title: 'Users', users, invitations });
 };
+
+exports.getUsers2 = async (req, res) => {
+  // 1. Query the database for a list of all teams
+  // TODO - filter only teams for which current user is owner or member
+  const usersPromise = User
+  .find({ account: req.user.account })
+  .sort({ role: 'asc', name: 'asc' });
+  
+  const invitationsPromise = Invitation
+  .find({ account: req.user.account })
+  .sort({ email: 'asc' });
+
+  const [users, invitations] = await Promise.all([usersPromise, invitationsPromise]);
+
+  res.json({ users, invitations });
+};
+

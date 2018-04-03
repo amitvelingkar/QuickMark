@@ -8,3 +8,10 @@ export function authHeader() {
         return {};
     }
 }
+
+// account roles and permissions
+exports.isAccountOwner = (user) => (user && user.role <= 1);
+exports.isAccountAdmin = (user) => (user && user.role <= 5);
+
+// role to text
+exports.roleToText = (role) => ((role<=1) ? 'Owner' : ((role<=5) ? 'Admin' : 'Member'));

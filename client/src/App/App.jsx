@@ -6,6 +6,7 @@ import { history } from '../_helpers';
 import { alertActions } from '../_actions';
 import { PrivateRoute } from '../_components';
 import { HomePage } from '../HomePage';
+import { UsersPage } from '../UsersPage';
 import { LoginPage, ForgotPage, ResetPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
 import '../_styles/style.scss';
@@ -31,6 +32,7 @@ class App extends React.Component {
                 <Router history={history}>
                     <div>
                         <PrivateRoute path="/team" component={HomePage} />
+                        <PrivateRoute path="/users" component={UsersPage} />
                         <Route path="/login" component={LoginPage} />
                         <Route path="/forgot" component={ForgotPage} />
                         <Route path="/register" component={RegisterPage} />

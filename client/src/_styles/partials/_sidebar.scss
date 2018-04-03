@@ -2,6 +2,7 @@
     background: $purple800;
     color: #eee;
     width: 240px;
+    min-height: 100vh;
     padding: 0 2rem;
     &__header {
         display: flex;

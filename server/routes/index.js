@@ -188,5 +188,9 @@ router.post('/api/v1/auth/reset/:token',
   authController.verifyPasswordRequirement,
   catchErrors(authController.update2)
 );
+router.get('/api/v1/users2',
+  catchErrors(authController.isAuthenticated),
+  catchErrors(accountController.getUsers2)
+);
 
 module.exports = router;

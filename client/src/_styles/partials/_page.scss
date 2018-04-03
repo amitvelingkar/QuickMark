@@ -74,6 +74,60 @@
         justify-content: space-between;
     }
 }
+/*
+.card{
+    background: white;
+    margin: 10px 0;
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    
+    &__header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+        margin-bottom: 1em;
+        display: flex;
+        justify-content: space-between;
+    }
+}
+*/
+.card {
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &__title {
+        font-size: 2rem;
+    }
+    &__subtitle {
+        color: #999;
+        text-transform: uppercase;
+        margin-top: 0.5em;
+    }
+    &__actions {
+        opacity: 0;
+        svg {
+            width: 25px;
+            height: 25px;
+            fill: #999;
+        }
+    }
+    &:hover{
+        border-bottom: 1px solid #E3F2FD;
+        .card__actions {
+            opacity: 1;
+        }
+    }
+    &__add{
+        color: #999;
+        cursor: pointer;
+        padding: 10px 0px;
+        &:hover{
+            color: black;
+        }
+    }       
+}
 
 .container {
     &__small {

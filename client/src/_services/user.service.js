@@ -120,14 +120,16 @@ function getAll() {
         method: 'GET',
         headers: authHeader()
     };
-
-    return fetch('/users', requestOptions).then(handleResponse);
+    console.log("calling users api", requestOptions);
+    return fetch('/api/v1/users2', requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
     if (!response.ok) { 
+        console.log('yoohoo');
         return Promise.reject(response.statusText);
     }
+    console.log('burbon');
 
     return response.json();
 }
