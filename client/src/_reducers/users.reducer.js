@@ -14,6 +14,35 @@ export function users(state = {}, action) {
       return { 
         error: action.error
       };
+    case userConstants.INVITE_SHOW_MODAL:
+      return {
+        ...state,
+        showInviteModal: true
+      };
+    case userConstants.INVITE_CLOSE_MODAL:
+      return {
+        ...state,
+        showInviteModal: false
+      };
+    case userConstants.INVITE_REQUEST:
+      return {
+        ...state,
+        inviting: true
+      };
+    case userConstants.INVITE_SUCCESS:
+      return {
+        ...state,
+        showInviteModal: false,
+        items: {
+          ...state.items,
+          invitations: [action.invitation, ...state.items.invitations]
+        }
+      };
+    case userConstants.INVITE_FAILURE:
+      return {
+        ...state,
+        errorInvite: action.error
+      };
     default:
       return state
   }

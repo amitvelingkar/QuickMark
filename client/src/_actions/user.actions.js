@@ -9,7 +9,10 @@ export const userActions = {
     register,
     forgot,
     reset,
-    getAll
+    getAll,
+    showInviteModal,
+    closeInviteModal,
+    invite
 };
 
 function login(username, password) {
@@ -114,4 +117,30 @@ function getAll() {
     function request() { return { type: userConstants.GETALL_REQUEST } }
     function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
     function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+}
+
+function showInviteModal() {
+    return { type: userConstants.INVITE_SHOW_MODAL };
+}
+
+function closeInviteModal() {
+    return { type: userConstants.INVITE_CLOSE_MODAL };
+}
+
+function invite(email, role) {
+    return dispatch => {
+        dispatch(request());
+        userService.invite(email, role)
+            .then(
+                invitation => { 
+                    dispatch(success(invitation));
+                },
+                error => {
+                    dispatch(failure(error));
+                }
+            );
+    };
+    function request() { return { type: userConstants.INVITE_REQUEST } }
+    function success(invitation) { return { type: userConstants.INVITE_SUCCESS, invitation } }
+    function failure(error) { return { type: userConstants.INVITE_FAILURE, error } }
 }

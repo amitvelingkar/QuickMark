@@ -192,5 +192,11 @@ router.get('/api/v1/users2',
   catchErrors(authController.isAuthenticated),
   catchErrors(accountController.getUsers2)
 );
+router.post('/api/v1/auth/invite', 
+  catchErrors(authController.isAuthenticated),
+  catchErrors(userController.confirmNewUser2),
+  catchErrors(invitationController.confirmNewInvitation2),
+  catchErrors(invitationController.inviteUser2)
+);
 
 module.exports = router;

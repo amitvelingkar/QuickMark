@@ -6,7 +6,8 @@ export const userService = {
     forgot,
     reset,
     logout,
-    getAll
+    getAll,
+    invite
 };
 
 function login(email, password) {
@@ -132,4 +133,21 @@ function handleResponse(response) {
     console.log('burbon');
 
     return response.json();
+}
+
+function invite(email, role) {
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(),
+        body: JSON.stringify({ email, role })
+    };
+
+    return fetch('/api/v1/auth/invite', requestOptions)
+    .then(response => {
+        if (!response.ok) { 
+            return Promise.reject(response.statusText);
+        }
+
+        return response.json();
+    });
 }
