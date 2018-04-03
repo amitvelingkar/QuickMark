@@ -280,3 +280,15 @@ exports.update2 = async (req, res) => {
   // success
   return res.json(updatedUser);
 };
+
+exports.invitation2 = async (req, res) => {
+  const invitation = await Invitation.findOne({
+    invitationToken: req.params.token,
+    invitationExpires: { $gt: Date.now() }
+  }).populate('account');
+  if (!invitation) {
+    return res.status(400).send('Invitation is invalid or has expired');
+  }
+  // if there is a invitation, show the rest password form
+  return res.json(invitation);
+};

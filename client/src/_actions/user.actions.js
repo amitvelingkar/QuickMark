@@ -12,7 +12,9 @@ export const userActions = {
     getAll,
     showInviteModal,
     closeInviteModal,
-    invite
+    invite,
+    getInvitation,
+    acceptInvitation
 };
 
 function login(username, password) {
@@ -143,4 +145,23 @@ function invite(email, role) {
     function request() { return { type: userConstants.INVITE_REQUEST } }
     function success(invitation) { return { type: userConstants.INVITE_SUCCESS, invitation } }
     function failure(error) { return { type: userConstants.INVITE_FAILURE, error } }
+}
+
+function getInvitation(token) {
+    return dispatch => {
+        dispatch(request());
+
+        userService.getInvitation(token)
+            .then(
+                item => dispatch(success(item)),
+                error => dispatch(failure(error))
+            );
+    };
+
+    function request() { return { type: userConstants.INVITATION_GET_REQUEST } }
+    function success(item) { return { type: userConstants.INVITATION_GET_SUCCESS, item } }
+    function failure(error) { return { type: userConstants.INVITATION_GET_FAILURE, error } }
+}
+
+function acceptInvitation(name, password, token) {
 }

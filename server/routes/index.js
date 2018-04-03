@@ -198,5 +198,6 @@ router.post('/api/v1/auth/invite',
   catchErrors(invitationController.confirmNewInvitation2),
   catchErrors(invitationController.inviteUser2)
 );
+router.get('/api/v1/auth/invitation/:token', catchErrors(authController.invitation2));
 
 module.exports = router;

@@ -7,7 +7,9 @@ export const userService = {
     reset,
     logout,
     getAll,
-    invite
+    invite,
+    getInvitation,
+    acceptInvitation
 };
 
 function login(email, password) {
@@ -126,11 +128,9 @@ function getAll() {
 }
 
 function handleResponse(response) {
-    if (!response.ok) { 
-        console.log('yoohoo');
+    if (!response.ok) {
         return Promise.reject(response.statusText);
     }
-    console.log('burbon');
 
     return response.json();
 }
@@ -150,4 +150,18 @@ function invite(email, role) {
 
         return response.json();
     });
+}
+
+function getInvitation(token) {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+
+    console.log("getting invitation", requestOptions);
+    return fetch('/api/v1/auth/invitation/'+token, requestOptions).then(handleResponse);
+}
+
+function acceptInvitation(email, password, token) {
+    
 }

@@ -8,7 +8,7 @@ import { PrivateRoute } from '../_components';
 import { HomePage } from '../HomePage';
 import { UsersPage } from '../UsersPage';
 import { LoginPage, ForgotPage, ResetPage } from '../LoginPage';
-import { RegisterPage } from '../RegisterPage';
+import { RegisterPage, InvitationPage } from '../RegisterPage';
 import '../_styles/style.scss';
 
 class App extends React.Component {
@@ -37,6 +37,7 @@ class App extends React.Component {
                         <Route path="/forgot" component={ForgotPage} />
                         <Route path="/register" component={RegisterPage} />
                         <Route path="/reset/:token" component={ResetPage} />
+                        <Route path="/invitation/:token" component={InvitationPage} />
                     </div>
                 </Router>
             </div>
