@@ -292,3 +292,33 @@ exports.invitation2 = async (req, res) => {
   // if there is a invitation, show the rest password form
   return res.json(invitation);
 };
+
+exports.addUser2 = async (req, res) => {
+  // find invitation
+  const invitation = await Invitation.findOne({
+    invitationToken: req.params.token,
+    invitationExpires: { $gt: Date.now() }
+  });
+
+  if (!invitation) {
+    return res.status(400).send('Invitation is invalid or has expired');
+  }
+
+  // create user
+  req.body.email = invitation.email;
+  req.body.account = invitation.account;
+  req.body.role = invitation.role;
+  const user = await (new User(req.body)).save();
+
+  // set password
+  const setPassword = promisify(user.setPassword, user);
+  await setPassword(req.body.password);
+  const updatedUser = await user.save();
+
+  // delete invitation
+  await invitation.remove();
+
+  // login user
+  await req.login(updatedUser);
+  return res.json(updatedUser);
+};

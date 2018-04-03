@@ -39,7 +39,7 @@ class InvitationPage extends React.Component {
         const { dispatch } = this.props;
         const { params } = this.props.match;
         if (name && password && params.token && password === passwordConfirm) {
-            dispatch(userActions.acceptInvitation(name, email, params.token));
+            dispatch(userActions.acceptInvitation(name, password, params.token));
         }
     }
 

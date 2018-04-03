@@ -164,4 +164,20 @@ function getInvitation(token) {
 }
 
 function acceptInvitation(name, password, token) {
+    return dispatch => {
+        dispatch(request());
+
+        userService.acceptInvitation(name, password, token)
+            .then(
+                user => {
+                    dispatch(success(user));
+                    history.push('/team');
+                },
+                error => dispatch(failure(error))
+            );
+    };
+
+    function request() { return { type: userConstants.INVITATION_GET_REQUEST } }
+    function success(user) { return { type: userConstants.INVITATION_GET_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.INVITATION_GET_FAILURE, error } }
 }

@@ -199,5 +199,9 @@ router.post('/api/v1/auth/invite',
   catchErrors(invitationController.inviteUser2)
 );
 router.get('/api/v1/auth/invitation/:token', catchErrors(authController.invitation2));
+router.post('/api/v1/auth/invitation/:token',
+  catchErrors(userController.confirmNewUser2),
+  catchErrors(authController.addUser2)
+);
 
 module.exports = router;

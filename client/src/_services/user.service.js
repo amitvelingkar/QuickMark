@@ -162,6 +162,13 @@ function getInvitation(token) {
     return fetch('/api/v1/auth/invitation/'+token, requestOptions).then(handleResponse);
 }
 
-function acceptInvitation(email, password, token) {
-    
+function acceptInvitation(name, password, token) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, password })
+    };
+
+    console.log("getting invitation", requestOptions);
+    return fetch('/api/v1/auth/invitation/'+token, requestOptions).then(handleResponse);
 }
