@@ -40,7 +40,7 @@ function login(email, password) {
         });
 }
 
-function register(email) {
+function register(name, email, accountName, password) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

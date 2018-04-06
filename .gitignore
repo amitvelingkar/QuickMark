@@ -12,3 +12,4 @@ client/yarn.lock
 server/node_modules/.bin/acorn
 server/public/images/photos/*
 server/public/uploads/*
+*.env
